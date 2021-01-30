@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ZoomScheduler:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ZoomScheduler_jar</output-path>
+    <root id="archive" name="ZoomScheduler.jar">
+      <element id="module-output" name="ZoomScheduler" />
+    </root>
+  </artifact>
+</component>
