@@ -5,51 +5,45 @@ import java.awt.event.ActionListener;
 
 public class MainWindow {
 
-    private JFrame mainFrame;
-    private JMenuBar menubar;
-    private JMenu menu;
-    private JMenuItem item1;
-    private JLabel headerLabel;
-    private JLabel statusLabel;
-    private JPanel controlPanel;
-
-    public MainWindow() {prepareWindow();}
-
-    public static void main(String[] args) {
-        MainWindow win = new MainWindow(); System.out.println("Done.");
+    public MainWindow() {
+        displayWindow();
     }
 
-    private void prepareWindow() {
-        this.mainFrame = new JFrame("Zoomer");
-        /*this.menubar = new JMenuBar();
-        this.menu = new JMenu("FILL");
-        this.item1 = new JMenuItem("1");
+    public static void main(String[] args) {
+        MainWindow win = new MainWindow();
+    }
 
-        this.menu.add(this.item1);
+    private void displayWindow() {
+        JFrame mainFrame = new JFrame("Zoom Scheduler");
 
-        this.menubar.add(this.menu);
+        //Set dimensions of window
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); int width = (int) screenSize.getWidth(); int height = (int) screenSize.getHeight(); mainFrame.setSize(width, height);
 
-        this.mainFrame.setJMenuBar(menubar);*/
+        //Set layout
+        mainFrame.setLayout(new GridLayout(4, 1));
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int) screenSize.getWidth();
-        int height = (int) screenSize.getHeight();
-        this.mainFrame.setSize(width, height);
-        this.mainFrame.setLayout(new GridLayout(3, 1));
+        //Set labels
+        JLabel headerLabel = new JLabel("Zoom Scheduler", JLabel.CENTER);
+        headerLabel.setFont(headerLabel.getFont().deriveFont(32.0f));
 
-        headerLabel = new JLabel("", JLabel.CENTER);
-        statusLabel = new JLabel("",JLabel.CENTER);
-        statusLabel.setSize(350,100);
+        JLabel subheaderLabel = new JLabel("Select the action you would like to take: ", JLabel.CENTER);
+        subheaderLabel.setSize(width, 100);
 
-        controlPanel = new JPanel();
+        JLabel subtext = new JLabel("PLEASE DO NOT TAMPER WITH THE \'ZoomScheduler\' FOLDER!!",JLabel.CENTER);
+        subtext.setSize(width,100);
+        subtext.setForeground(Color.RED);
+
+        //Create control panel for buttons
+        JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new FlowLayout());
 
-        headerLabel.setText("Zoom Scheduler");
-
+        //Add panels and labels to window
         mainFrame.add(headerLabel);
+        mainFrame.add(subheaderLabel);
         mainFrame.add(controlPanel);
-        mainFrame.add(statusLabel);
+        mainFrame.add(subtext);
 
+        //Create and add buttons
         JButton addRepeating = new JButton("Add repeating event");
         JButton addEvent = new JButton("Add one-time event");
         JButton getList = new JButton("Show list of events");
@@ -58,26 +52,26 @@ public class MainWindow {
         controlPanel.add(addEvent);
         controlPanel.add(getList);
 
+        //Add action listeners to all buttons
         addRepeating.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                statusLabel.setText("Add repeating event");
 
             }
         });
-
         addEvent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                statusLabel.setText("Add one-time event");
+                AddEventWindow addEventWindow = new AddEventWindow();
             }
         });
-
         getList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                statusLabel.setText("Show list of events");
+                EventsWindow eventsWindow = new EventsWindow();
             }
         });
 
-        this.mainFrame.setVisible(true);
-        this.mainFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        mainFrame.setVisible(true);
+        mainFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
     }
+
+
 }
