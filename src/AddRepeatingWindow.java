@@ -69,7 +69,7 @@ public class AddRepeatingWindow {
         dayPanel.add(sat, constraints);
         dayPanel.add(sun, constraints);
 
-        JLabel days = new JLabel("");
+        JLabel days = new JLabel("", JLabel.CENTER);
 
         int[] daysRepeating = new int[7];
         mon.addActionListener(new ActionListener() {

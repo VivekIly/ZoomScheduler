@@ -186,21 +186,76 @@ public class MainWindow {
         });
         exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Serialize serialize = new Serialize(arl);
-                Serialize.serialize(arl, false);
-                serialize.serializeSettings();
 
-                Serialize.serializeRepeating(arlR, true);
+                JFrame confirm = new JFrame("Confirm exit");
+                confirm.setUndecorated(true);
+                confirm.setSize(200, 100);
+                confirm.setShape(new RoundRectangle2D.Double(0, 0, 200, 100, 20, 20));
+                confirm.setLayout(new GridLayout(2, 1));
 
-                mainFrame.dispose();
-                System.exit(0);
+                Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+                confirm.setLocation(dim.width/2-confirm.getSize().width/2, dim.height/2-confirm.getSize().height/2);
+
+                JPanel exitConfirm = new JPanel();
+                JLabel exitLabel = new JLabel("Are you sure you want to exit?");
+                exitConfirm.add(exitLabel);
+
+                JPanel exitButtons = new JPanel();
+                JButton yes = new JButton("Yes");
+                JButton no = new JButton("No");
+                exitButtons.add(yes);
+                exitButtons.add(no);
+
+                if (Main.colorTheme.equals("d")) {
+                    int textColor = 200;
+                    Color darkText = new Color(textColor, textColor, textColor);
+                    exitLabel.setForeground(darkText);
+
+                    int themeColor = 16;
+                    Color dark = new Color(themeColor, themeColor, themeColor);
+                    exitConfirm.setBackground(dark);
+                    exitButtons.setBackground(dark);
+                }
+
+                if (Main.colorTheme.equals("l")) {
+                    exitLabel.setForeground(Color.GRAY);
+
+                    int themeColor = 245;
+                    Color light = new Color(themeColor, themeColor, themeColor);
+                    confirm.setBackground(light);
+                }
+
+                yes.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        confirm.dispose();
+
+                        Serialize.serialize(arl, false);
+                        Serialize.serializeSettings();
+
+                        Serialize.serializeRepeating(arlR, true);
+
+                        mainFrame.dispose();
+                        System.exit(0);
+                    }
+                });
+
+                no.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        confirm.dispose();
+                    }
+                });
+
+                confirm.add(exitConfirm);
+                confirm.add(exitButtons);
+
+
+                confirm.setVisible(true);
             }
         });
         close.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Serialize serialize = new Serialize(arl);
                 Serialize.serialize(arl, false);
-                serialize.serializeSettings();
+                Serialize.serializeSettings();
 
                 Serialize.serializeRepeating(arlR, true);
 
