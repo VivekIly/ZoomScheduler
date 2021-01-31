@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 
 public class Main {
 
@@ -15,15 +15,28 @@ public class Main {
 
         MainWindow mainWindow = new MainWindow();
 
-        BinarySearchTree bst = Serialize.fetch();
+        ArrayList<ZoomEvent> arl = Serialize.fetch();
+        ArrayList<RepeatingZoomEvent> arlR = Serialize.fetchRepeating();
 
         ZoomEvent[] array = null;
-        if (bst.getArray() != null) {
-            Tools.println(bst.getArray());
-            array = new ZoomEvent[bst.getArray().length];
+        if (arl != null) {
+            Tools.println("One-time events: " + arl);
+            array = new ZoomEvent[arl.size()];
 
             int index = 0;
-            for (Object o : bst.getArray()) {
+            for (Object o : arl) {
+                array[index] = (ZoomEvent) o;
+                index++;
+            }
+        }
+
+        RepeatingZoomEvent[] arrayRepeating = null;
+        if (arlR != null) {
+            Tools.println("Repeating events: " + arlR);
+            array = new ZoomEvent[arlR.size()];
+
+            int index = 0;
+            for (Object o : arlR) {
                 array[index] = (ZoomEvent) o;
                 index++;
             }
@@ -64,18 +77,31 @@ public class Main {
     }
 
     public static void rerun() {
-        BinarySearchTree bst = Serialize.fetch();
+        ArrayList<ZoomEvent> arl = Serialize.fetch();
+        ArrayList<RepeatingZoomEvent> arlR = Serialize.fetchRepeating();
 
         Main.defaultColorTheme = Serialize.fetchColor();
         Main.colorTheme = defaultColorTheme;
 
         ZoomEvent[] array = null;
-        if (bst.getArray() != null) {
-            Tools.println(bst.getArray());
-            array = new ZoomEvent[bst.getArray().length];
+        if (arl != null) {
+            Tools.println(arl);
+            array = new ZoomEvent[arl.size()];
 
             int index = 0;
-            for (Object o : bst.getArray()) {
+            for (Object o : arl) {
+                array[index] = (ZoomEvent) o;
+                index++;
+            }
+        }
+
+        RepeatingZoomEvent[] arrayRepeating = null;
+        if (arlR != null) {
+            Tools.println(arlR);
+            array = new ZoomEvent[arlR.size()];
+
+            int index = 0;
+            for (Object o : arlR) {
                 array[index] = (ZoomEvent) o;
                 index++;
             }

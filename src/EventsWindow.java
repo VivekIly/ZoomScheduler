@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
 
 public class EventsWindow {
 
@@ -8,17 +10,18 @@ public class EventsWindow {
     }
 
     private void prepareWindow() {
-//Create a JPanel
-        JPanel panel = new JPanel();
+        //Create JFrame
+        JFrame mainFrame = new JFrame("Existing events");
 
 
         //Create scrollbar
-        JScrollPane scrollBar = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        //JScrollPane scrollBar = new JScrollPane(headerPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        //Create JFrame
-        JFrame mainFrame = new JFrame("Existing events");
         //mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        mainFrame.setUndecorated(false);
+        mainFrame.setUndecorated(true);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); int width = (int) screenSize.getWidth(); int height = (int) screenSize.getHeight(); mainFrame.setSize((int)(width - 100), height - 100);
+        mainFrame.setShape(new RoundRectangle2D.Double(10, 10, width - 150, height - 150, 50, 50));
+
         //mainFrame.setLayout(new GridLayout(2, 1));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -31,17 +34,19 @@ public class EventsWindow {
         //mainFrame.add(scrollBar);
 
 
-        BinarySearchTree bst = Serialize.fetch();
+        ArrayList<ZoomEvent> arl = Serialize.fetch();
 
-        ZoomEvent[] array = new ZoomEvent[bst.getArray().length];
+        ZoomEvent[] array = new ZoomEvent[arl.size()];
 
         int index = 0;
-        for (Object o : bst.getArray()) {
-            if (!((ZoomEvent) o).isRepeating()) {
-                array[index] = (ZoomEvent) o;
-                index++;
-            } else {
+        for (Object o : arl) {
+            if (o != null) {
+                if (!((ZoomEvent) o).isRepeating()) {
+                    array[index] = (ZoomEvent) o;
+                    index++;
+                } else {
 
+                }
             }
         }
 
@@ -51,8 +56,13 @@ public class EventsWindow {
                 if (event != null) {
                     String out = "<html>Name: " + event.getName() + "<br/>Date: " + event.getDate() + "<br/> Time: " + event.getTime() + "<br/> URL: " + event.getUri();
                     JPanel eventPanel = new JPanel();
-                    eventPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+                    eventPanel.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLUE));
+                    eventPanel.setLayout(null);
                     JLabel details = new JLabel(out, JLabel.LEFT);
+
+                    Dimension size = details.getPreferredSize();
+                    details.setBounds((int)(width/2.65), 100, size.width*4, size.height*2);
+
 
                     if (Main.colorTheme.equals("d")) {
                         eventPanel.setBackground(new Color(25, 25, 25));
@@ -64,7 +74,7 @@ public class EventsWindow {
                     eventPanel.add(details);
                     eventLabel.add(event.getName(), eventPanel);
                     eventLabel.setSize(400, 300);
-                    panel.add(eventLabel, constraints);
+                    eventLabel.add(eventPanel, constraints);
                     mainFrame.add(eventLabel);
                 }
             }

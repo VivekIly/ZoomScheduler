@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 public class AddRepeatingWindow {
 
@@ -59,7 +60,7 @@ public class AddRepeatingWindow {
         JButton fri = new JButton("Friday");
         JButton sat = new JButton("Saturday");
         JButton sun = new JButton("Sunday");
-        //dayPanel.add(dayLabel, constraints);
+        dayPanel.add(dayLabel, constraints);
         dayPanel.add(mon, constraints);
         dayPanel.add(tues, constraints);
         dayPanel.add(wed, constraints);
@@ -499,6 +500,7 @@ public class AddRepeatingWindow {
 
             int themeColor = 245;
             Color light = new Color(themeColor, themeColor, themeColor);
+            headerPanel.setBackground(light);
             controlPanel.setBackground(light);
             namePanel.setBackground(light);
             dayPanel.setBackground(light);
@@ -518,7 +520,7 @@ public class AddRepeatingWindow {
         mainFrame.add(controlPanel);
 
         //Add action listeners to all buttons
-        BinarySearchTree finalTempBST = Serialize.fetchRepeating();
+        ArrayList<RepeatingZoomEvent> finalTempAL = Serialize.fetchRepeating();
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 boolean nameFlag = false;
@@ -577,9 +579,8 @@ public class AddRepeatingWindow {
 
                 if (!nameFlag && !timeFlag && !daysFlag && !linkFlag) {
                     //RepeatingZoomEvent temp = new RepeatingZoomEvent(name.getText(), url, time.getText(), true, daysRepeating);
-                    finalTempBST.addNode(new Node(new RepeatingZoomEvent(name.getText(), url, time.getText(), true, daysRepeating), name.getText(), name.getText()));
-                    Serialize serialize = new Serialize(finalTempBST, Main.defaultColorTheme);
-                    serialize.serialize(finalTempBST, true);
+                    finalTempAL.add(new RepeatingZoomEvent(name.getText(), url, time.getText(), true, daysRepeating));
+                    Serialize.serializeRepeating(finalTempAL, true);
                     mainFrame.dispose();
                     Main.setRerunFlag(true);
                 }

@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
 
 public class MainWindow {
 
@@ -33,7 +34,7 @@ public class MainWindow {
         headerPanel.setLayout(null);
         JLabel headerLabel = new JLabel("Zoom Scheduler", JLabel.CENTER);
         Dimension size = headerLabel.getPreferredSize();
-        headerLabel.setBounds((int)(width/2.65), 100, size.width*4, size.height*2);
+        headerLabel.setBounds((int)(width/2.65), 65, size.width*4, size.height*2);
         headerLabel.setFont(headerLabel.getFont().deriveFont(32.0f));
         headerPanel.add(headerLabel);
 
@@ -132,8 +133,8 @@ public class MainWindow {
         controlPanel.add(addEvent);
         controlPanel.add(getList);
 
-        BinarySearchTree bst = Serialize.fetch();
-        BinarySearchTree bstRepeating = Serialize.fetchRepeating();
+        ArrayList<ZoomEvent> arl = Serialize.fetch();
+        ArrayList<RepeatingZoomEvent> arlR = Serialize.fetchRepeating();
 
         //Add action listeners to all buttons
         addRepeating.addActionListener(new ActionListener() {
@@ -148,7 +149,7 @@ public class MainWindow {
         });
         getList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (bst.getArray() == null) {
+                if (arl == null && arlR == null) {
                     statusPanel.setText("There are no events scheduled.");
                 } else {
                     EventsWindow eventsWindow = new EventsWindow();
@@ -175,8 +176,8 @@ public class MainWindow {
                     Main.defaultColorTheme = "l";
                     Main.colorTheme = "l";
                 }
-                Serialize serialize = new Serialize(bst, Main.defaultColorTheme);
-                serialize.serializeSettings();
+
+                Serialize.serializeSettings();
 
                 mainFrame.dispose();
 
@@ -185,12 +186,11 @@ public class MainWindow {
         });
         exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Serialize serialize = new Serialize(bst, Main.defaultColorTheme);
-                serialize.serialize(bst, false);
+                Serialize serialize = new Serialize(arl);
+                Serialize.serialize(arl, false);
                 serialize.serializeSettings();
 
-                Serialize serialize1 = new Serialize(bstRepeating, Main.defaultColorTheme);
-                serialize.serialize(bstRepeating, true);
+                Serialize.serializeRepeating(arlR, true);
 
                 mainFrame.dispose();
                 System.exit(0);
@@ -198,9 +198,11 @@ public class MainWindow {
         });
         close.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Serialize serialize = new Serialize(bst, Main.defaultColorTheme);
-                serialize.serialize(bst, false);
+                Serialize serialize = new Serialize(arl);
+                Serialize.serialize(arl, false);
                 serialize.serializeSettings();
+
+                Serialize.serializeRepeating(arlR, true);
 
                 mainFrame.dispose();
             }
