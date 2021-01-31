@@ -3,10 +3,15 @@
 public class Main {
 
     private static boolean rerunFlag = false;
+    public static String colorTheme = "l";
+    public static String defaultColorTheme = "l";
 
     public static void main(String[] args) throws InterruptedException {
 
         Serialize.initSerialize();
+
+        Main.defaultColorTheme = Serialize.fetchColor();
+        Main.colorTheme = defaultColorTheme;
 
         MainWindow mainWindow = new MainWindow();
 
@@ -61,6 +66,9 @@ public class Main {
     public static void rerun() {
         BinarySearchTree bst = Serialize.fetch();
 
+        Main.defaultColorTheme = Serialize.fetchColor();
+        Main.colorTheme = defaultColorTheme;
+
         ZoomEvent[] array = null;
         if (bst.getArray() != null) {
             Tools.println(bst.getArray());
@@ -88,7 +96,7 @@ public class Main {
 
             if (array != null) {
                 for (int i = 0; i < array.length; i++) {
-                    if (array[i] != null && array[i].getTime().equals(time.substring(11, 16))) {
+                    if (array[i] != null && array[i].getDate().equals(time.substring(0, 10)) && array[i].getTime().equals(time.substring(11, 16))) {
                         array[i].openLink();
                         ZoomEvent[] temp = null;
                         int index = 0;

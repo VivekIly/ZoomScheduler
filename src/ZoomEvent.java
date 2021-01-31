@@ -16,8 +16,10 @@ public class ZoomEvent implements Serializable {
         this.time = time;
     }
 
-    public ZoomEvent(URI URL, boolean repeating, int[] repeatingDays) {
+    public ZoomEvent(String name, URI URL, String time, boolean repeating, int[] repeatingDays) {
+        this.name = name;
         this.uri = URL;
+        this.time = time;
         this.repeating = repeating;
         this.repeatingDays = repeatingDays;
     }
@@ -45,6 +47,10 @@ public class ZoomEvent implements Serializable {
 
     public URI getUri() {
         return uri;
+    }
+
+    public boolean isRepeating() {
+        return this.repeating;
     }
 
     public String toString() {

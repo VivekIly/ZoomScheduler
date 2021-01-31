@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.RoundRectangle2D;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -18,9 +19,11 @@ public class AddEventWindow {
 
     private void prepareWindow() {
         JFrame mainFrame = new JFrame("Add one-time event");
+        mainFrame.setUndecorated(true);
 
         //Set dimensions of window
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); int width = (int) screenSize.getWidth(); double height = (int) screenSize.getHeight(); mainFrame.setSize(width/3, (int) (height/1.5));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); int width = (int) screenSize.getWidth(); double height = (int) screenSize.getHeight(); mainFrame.setSize(650, (int) (height/1.5));
+        mainFrame.setShape(new RoundRectangle2D.Double(10, 10, 637, (int) (height/1.6), 50, 50));
 
         //Set layout
         mainFrame.setLayout(new GridLayout(7, 1));
@@ -28,9 +31,14 @@ public class AddEventWindow {
         constraints.insets = new Insets(10, 10, 10, 10);
 
         //Set labels
-        JLabel headerLabel = new JLabel("", JLabel.CENTER);
-        headerLabel.setText("Add a one-time event");
-        headerLabel.setFont (headerLabel.getFont().deriveFont(22.0f));
+        JPanel headerPanel = new MotionPanel(mainFrame);
+        headerPanel.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLUE));
+        headerPanel.setLayout(null);
+        JLabel headerLabel = new JLabel("Add a one-time event", JLabel.CENTER);
+        Dimension size = headerLabel.getPreferredSize();
+        headerLabel.setBounds(80, 35, size.width*4, size.height*2);
+        headerLabel.setFont(headerLabel.getFont().deriveFont(22.0f));
+        headerPanel.add(headerLabel);
 
         //Create name panel for event name
         JPanel namePanel = new JPanel();
@@ -74,8 +82,49 @@ public class AddEventWindow {
         controlPanel.add(save);
         controlPanel.add(cancel);
 
+        //Switches text and background colors to fit the color theme
+        if (Main.colorTheme.equals("d")) {
+            int textColor = 200;
+            Color darkText = new Color(textColor, textColor, textColor);
+            headerLabel.setForeground(darkText);
+            nameLabel.setForeground(darkText);
+            controlPanel.setForeground(darkText);
+            dateLabel.setForeground(darkText);
+            timeLabel.setForeground(darkText);
+            linkLabel.setForeground(darkText);
+
+            int themeColor = 16;
+            Color dark = new Color(themeColor, themeColor, themeColor);
+            headerPanel.setBackground(dark);
+            controlPanel.setBackground(dark);
+            namePanel.setBackground(dark);
+            datePanel.setBackground(dark);
+            timePanel.setBackground(dark);
+            linkPanel.setBackground(dark);
+            mainFrame.getContentPane().setBackground(dark);
+        }
+
+        if (Main.colorTheme.equals("l")) {
+            headerLabel.setForeground(Color.GRAY);
+            namePanel.setForeground(Color.BLACK);
+            controlPanel.setForeground(Color.BLACK);
+            datePanel.setForeground(Color.BLACK);
+            timePanel.setForeground(Color.BLACK);
+            linkPanel.setForeground(Color.BLACK);
+
+            int themeColor = 245;
+            Color light = new Color(themeColor, themeColor, themeColor);
+            controlPanel.setBackground(light);
+            headerPanel.setBackground(light);
+            namePanel.setBackground(light);
+            datePanel.setBackground(light);
+            timePanel.setBackground(light);
+            linkPanel.setBackground(light);
+            mainFrame.getContentPane().setBackground(light);
+        }
+
         //Add panels and labels to window
-        mainFrame.add(headerLabel);
+        mainFrame.add(headerPanel);
         mainFrame.add(namePanel);
         mainFrame.add(datePanel);
         mainFrame.add(timePanel);
@@ -143,8 +192,8 @@ public class AddEventWindow {
                 if (!nameFlag && !timeFlag && !dateFlag && !linkFlag) {
                     ZoomEvent temp = new ZoomEvent(name.getText(), url, date.getText(), time.getText());
                     finalTempBST.addNode(new Node(temp, name.getText(), name.getText()));
-                    Serialize serialize = new Serialize(finalTempBST);
-                    serialize.serialize();
+                    Serialize serialize = new Serialize(finalTempBST, Main.defaultColorTheme);
+                    serialize.serialize(finalTempBST, false);
                     mainFrame.dispose();
                     Main.setRerunFlag(true);
                 }
