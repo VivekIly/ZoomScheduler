@@ -2,6 +2,10 @@ import java.io.*;
 import java.net.URI;
 
 public class ZoomEvent implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 2102570816361121772L;
+
     private String name;
     private URI uri;
     private String date;

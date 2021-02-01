@@ -12,6 +12,8 @@ public class MainWindow {
     private String date;
     private String time;
 
+    private JLabel timeLabel;
+
     public MainWindow() {displayWindow();}
 
     public static void main(String[] args) {MainWindow win = new MainWindow();}
@@ -30,7 +32,7 @@ public class MainWindow {
 
 
         //Set layout
-        mainFrame.setLayout(new GridLayout(7, 1));
+        mainFrame.setLayout(new GridLayout(8, 1));
 
         //Set labels
         JPanel headerPanel = new MotionPanel(mainFrame);
@@ -61,7 +63,7 @@ public class MainWindow {
         if (Main.colorTheme.equals("l")) {
             theme = new JButton("Switch to Dark theme");
         } else if (Main.colorTheme.equals("d")) {
-            theme = new JButton("Switch to Light theme");
+            theme = new JButton("Temporarily switch to Light theme");
         }
 
         JButton defaultTheme = null;
@@ -81,15 +83,20 @@ public class MainWindow {
         JPanel exitPanel = new JPanel();
         exitPanel.setLayout(new FlowLayout());
         JButton exit = new JButton("Exit Application");
-        JButton close = new JButton("Close Window");
+        JButton close = new JButton("Hide Window");
         exitPanel.add(close);
         exitPanel.add(exit);
+
+        //Create time label to display current time.
+        timeLabel = new JLabel("", JLabel.CENTER);
+        timeLabel.setSize(mainFrame.getWidth(), 1);
 
         //Switches text  and background colors to fit the color theme
         if (Main.colorTheme.equals("d")) {
             int textColor = 200;
             Color darkText = new Color(textColor, textColor, textColor);
             headerLabel.setForeground(darkText);
+            timeLabel.setForeground(darkText);
             subheaderLabel.setForeground(darkText);
             controlPanel.setForeground(darkText);
             themePanel.setForeground(darkText);
@@ -122,6 +129,7 @@ public class MainWindow {
 
         //Add panels and labels to window
         mainFrame.add(headerPanel);
+        mainFrame.add(timeLabel);
         mainFrame.add(subheaderLabel);
         mainFrame.add(controlPanel);
         mainFrame.add(statusPanel);
@@ -273,6 +281,15 @@ public class MainWindow {
 
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+
+    }
+
+    public void updateDateTime() {
+        this.timeLabel.setText("<html>" + Tools.dateToString(Main.currentTime.substring(0, 10)) + "     &nbsp;      &nbsp;       &nbsp;      &nbsp;      &nbsp;      &nbsp;      &nbsp;      &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;" + Main.currentTime.substring(11) + "<html>");
+    }
+
+    public void setDateTime(String str) {
+        this.timeLabel.setText(str);
     }
 
 

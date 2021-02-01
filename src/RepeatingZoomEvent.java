@@ -3,6 +3,9 @@ import java.net.URI;
 
 public class RepeatingZoomEvent implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 2102570816361121571L;
+
     private String name;
     private URI uri;
     private String time;
@@ -51,14 +54,6 @@ public class RepeatingZoomEvent implements Serializable {
         }
 
         return returnString;
-    }
-
-    public void setDeleteTime(String deleteTime) {
-        this.deleteTime = deleteTime;
-    }
-
-    public String getDeleteTime() {
-        return deleteTime;
     }
 
     public boolean serialize() {

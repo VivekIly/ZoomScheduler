@@ -13,12 +13,13 @@ public class Main {
     public static String defaultColorTheme = "l";
     public static String currentTime;
     public static int today;
+    private static MainWindow mainWindow;
 
     public static ArrayList<File> toDeleteZE = new ArrayList<>();
 
     public static void main(String[] args) throws InterruptedException {
 
-        Main.today = getDayOfWeek(Tools.getDate());
+        Main.today = getDayOfWeek(Tools.getDate(), "yyyy/MM/dd");
         if (Main.today == 1) {
             Main.today = 6;
         } else {
@@ -30,7 +31,8 @@ public class Main {
         Main.defaultColorTheme = Serialize.fetchColor();
         Main.colorTheme = defaultColorTheme;
 
-        MainWindow mainWindow = new MainWindow();
+        Main.currentTime = Tools.getCurrentTime();
+        mainWindow = new MainWindow();
 
         File dir = new File(System.getProperty("user.home") + File.separator + "ZoomScheduler - DO NOT TAMPER");
         File[] zeFiles = dir.listFiles(new FilenameFilter() {
@@ -77,9 +79,10 @@ public class Main {
 
         for (int a = 0; a < 1; a--) {
             Main.currentTime = Tools.getCurrentTime();
+            mainWindow.updateDateTime();
 
             if (Main.currentTime.substring(11, 16).equals("00:00")) {
-                Main.today = getDayOfWeek(Tools.getDate());
+                Main.today = getDayOfWeek(Tools.getDate(), "yyyy/MM/dd");
             }
 
             for (File f : toDeleteZE) {
@@ -112,6 +115,7 @@ public class Main {
                         } else {
                             Tools.println(file.getName() + " could not be deleted.");
                         }
+                        mainWindow.setDateTime("");
                         try {
                             Thread.sleep(5000);
                         } catch (InterruptedException e) {
@@ -129,6 +133,7 @@ public class Main {
                     if (event.getTime().equals(Main.currentTime.substring(11, 16))) {
                         if (event.getRepeatingDays()[Main.today] ==  1) {
                             event.openLink();
+                            mainWindow.setDateTime("");
                             try {
                                 Thread.sleep(1000 * 61);
                             } catch (InterruptedException e) {
@@ -139,10 +144,6 @@ public class Main {
                 }
             }
         }
-    }
-
-    private void updateToday() {
-
     }
 
     public static void rerun() {
@@ -195,9 +196,10 @@ public class Main {
 
         for (int a = 0; a < 1; a--) {
             Main.currentTime = Tools.getCurrentTime();
+            mainWindow.updateDateTime();
 
             if (Main.currentTime.substring(11, 16).equals("00:00")) {
-                Main.today = getDayOfWeek(Tools.getDate());
+                Main.today = getDayOfWeek(Tools.getDate(), "yyyy/MM/dd");
             }
 
             for (File f : toDeleteZE) {
@@ -234,6 +236,7 @@ public class Main {
                         } else {
                             Tools.println(file.getName() + " could not be deleted.");
                         }
+                        mainWindow.setDateTime("");
                         try {
                             Thread.sleep(5000);
                         } catch (InterruptedException e) {
@@ -251,6 +254,7 @@ public class Main {
                     if (event.getTime().equals(Main.currentTime.substring(11, 16))) {
                         if (event.getRepeatingDays()[Main.today] ==  1) {
                             event.openLink();
+                            mainWindow.setDateTime("");
                             try {
                                 Thread.sleep(1000 * 61);
                             } catch (InterruptedException e) {
@@ -265,10 +269,10 @@ public class Main {
 
     public static void setRerunFlag(boolean bool) {Main.rerunFlag = bool;}
 
-    public static int getDayOfWeek(String date) {
+    public static int getDayOfWeek(String date, String datePattern) {
         Date date1 = null;
         try {
-            date1 = new SimpleDateFormat("yyyy/MM/dd").parse(date);
+            date1 = new SimpleDateFormat(datePattern).parse(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -277,7 +281,6 @@ public class Main {
         return cal.get(Calendar.DAY_OF_WEEK);
     }
 
-    // TODO: Implement repeating events.
     // TODO: Fix scheduled events window.
     // TODO: Display current date and time in the main window.
     // TODO: Remove past events.
@@ -286,4 +289,5 @@ public class Main {
     // TODO: Can only open one of each type of window.
     // TODO: Fit window to all screen sizes.
     // TODO: Fix bug where Event viewer window doesn't detect events.
+    // TODO: Add option to export and import data.
 }

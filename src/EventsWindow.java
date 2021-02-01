@@ -18,7 +18,7 @@ public class EventsWindow {
 
     private void prepareWindow() {
         //Create JFrame
-        JFrame mainFrame = new JFrame("Existing events");
+        JFrame mainFrame = new JFrame("List of events");
 
 
         //mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -28,8 +28,8 @@ public class EventsWindow {
         int width = (int) screenSize.getWidth();
         int height = (int) screenSize.getHeight();
         mainFrame.setSize(750, height - 100);
-        mainFrame.setShape(new RoundRectangle2D.Double(0, 4, mainFrame.getWidth(), mainFrame.getHeight() - 8, 50, 50));
-        mainFrame.setLayout(new GridLayout(10, 3));
+        mainFrame.setShape(new RoundRectangle2D.Double(0, 5, mainFrame.getWidth(), mainFrame.getHeight() - 11, 50, 50));
+        mainFrame.setLayout(new GridLayout(19, 3));
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -47,12 +47,13 @@ public class EventsWindow {
         headerPanel.setPreferredSize(new Dimension(mainFrame.getWidth(), 100));
         JLabel headerLabel = new JLabel("List of events:", JLabel.CENTER);
         Dimension headerSize = headerLabel.getPreferredSize();
-        headerLabel.setBounds(100, 20, headerSize.width*4, headerSize.height*2);
+        headerLabel.setBounds(100, headerPanel.getHeight()/50, headerSize.width*4, headerSize.height*2);
         headerLabel.setFont (headerLabel.getFont().deriveFont(22.0f));
         headerPanel.add(headerLabel);
 
-        //Create event panel
-        JPanel eventPanel = new JPanel();
+        JLabel instruct1 = new JLabel("Click on an event to open the link");
+        instruct1.setBounds(20, headerPanel.getHeight() - 45, headerSize.width*4, headerSize.height*2);
+        headerPanel.add(instruct1);
 
 
         JPanel headerPanel2 = new MotionPanel(mainFrame);
@@ -62,9 +63,14 @@ public class EventsWindow {
         headerPanel2.setPreferredSize(new Dimension(mainFrame.getWidth(), 100));
         JLabel headerLabel2 = new JLabel("events:", JLabel.CENTER);
         Dimension headerSize2 = headerLabel2.getPreferredSize();
-        headerLabel2.setBounds(-38, 20, headerSize2.width*4, headerSize2.height*2);
+        headerLabel2.setBounds(-38, headerPanel2.getHeight()/50, headerSize2.width*4, headerSize2.height*2);
         headerLabel2.setFont (headerLabel2.getFont().deriveFont(22.0f));
         headerPanel2.add(headerLabel2);
+
+        JLabel instruct2 = new JLabel("Right-click an event to remove it");
+        instruct2.setBounds(0, headerPanel2.getHeight() - 45, headerSize2.width*8, headerSize2.height*2);
+        headerPanel2.add(instruct2);
+
         mainFrame.add(headerPanel);
         mainFrame.add(headerPanel2);
 
@@ -85,6 +91,7 @@ public class EventsWindow {
             }
         });
 
+
         File[] files = new File[zeFiles.length + rzeFiles.length];
 
         int index = 0;
@@ -94,21 +101,23 @@ public class EventsWindow {
         }
         for (File f : rzeFiles) {
             files[index] = f;
+            index++;
         }
 
         int added = 0;
 
         for (File file : files) {
+            JPanel eventPanel = new JPanel();
             if (file.getName().endsWith(".ze")) {
                 ZoomEvent event = Serialize.fetch(file.getName());
                 added++;
-                String out = "<html>Name: " + event.getName() + "<br/>Date: " + event.getDate() + "     &nbsp; &nbsp; &nbsp;     Right-click to remove<br/>Time: " + event.getTime() + "     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     Click to open link<br/> URL: " + event.getUri();
+                String out = "<html>Name: " + event.getName() + "<br/>Date: " + event.getDate() + "<br/>Time: " + event.getTime();
                 eventPanel.setLayout(null);
                 JLabel details = new JLabel(out, JLabel.LEFT);
 
                 Dimension size = details.getPreferredSize();
                 details.setLayout(null);
-                details.setBounds(5, -30, size.width * 4, size.height * 2);
+                details.setBounds(5, -19, size.width * 4, size.height * 2);
 
 
                 if (Main.colorTheme.equals("d")) {
@@ -119,8 +128,10 @@ public class EventsWindow {
                     headerLabel.setForeground(darkText);
                     headerPanel2.setForeground(darkText);
                     headerLabel2.setForeground(darkText);
-                    details.setForeground(Color.BLUE.darker());
+                    details.setForeground(darkText);
                     mainFrame.setForeground(darkText);
+                    instruct1.setForeground(darkText);
+                    instruct2.setForeground(darkText);
 
                     int themeColor = 16;
                     Color dark = new Color(themeColor, themeColor, themeColor);
@@ -141,8 +152,10 @@ public class EventsWindow {
                     headerLabel.setForeground(darkText);
                     headerPanel2.setForeground(darkText);
                     headerLabel2.setForeground(darkText);
-                    details.setForeground(Color.BLUE.darker());
+                    details.setForeground(darkText);
                     mainFrame.setForeground(darkText);
+                    instruct1.setForeground(darkText);
+                    instruct2.setForeground(darkText);
 
                     int themeColor = 240;
                     Color dark = new Color(themeColor, themeColor, themeColor);
@@ -215,7 +228,18 @@ public class EventsWindow {
                                     if (file.delete()) Tools.println(file.getName() + " successfully deleted.");
                                     else Tools.println(file.getName() + " could not be deleted.");
 
+                                    try {
+                                        Thread.sleep(5000);
+                                    } catch (InterruptedException interruptedException) {
+                                        interruptedException.printStackTrace();
+                                    }
                                     mainFrame.dispose();
+
+                                    try {
+                                        Thread.sleep(5000);
+                                    } catch (InterruptedException interruptedException) {
+                                        interruptedException.printStackTrace();
+                                    }
                                 }
                             });
 
@@ -242,34 +266,34 @@ public class EventsWindow {
                 added++;
                 String days = "";
                 if (event.getRepeatingDays()[0] == 1) {
-                    days += "Mon, ";
+                    days += "M";
                 }
                 if (event.getRepeatingDays()[1] == 1) {
-                    days += "Tues, ";
+                    days += " Tu";
                 }
                 if (event.getRepeatingDays()[2] == 1) {
-                    days += "Wed, ";
+                    days += " W";
                 }
                 if (event.getRepeatingDays()[3] == 1) {
-                    days += "Th, ";
+                    days += " Th";
                 }
                 if (event.getRepeatingDays()[4] == 1) {
-                    days += "Fri, ";
+                    days += " F";
                 }
                 if (event.getRepeatingDays()[5] == 1) {
-                    days += "Sat, ";
+                    days += " Sa";
                 }
                 if (event.getRepeatingDays()[6] == 1) {
-                    days += "Sun";
+                    days += " Su";
                 }
-                String out = "<html>Name: " + event.getName() + "<br/>Days: " + days + " &nbsp;&nbsp;&nbsp;&nbsp; Click to open link<br/> Time: " + event.getTime() + "     &nbsp; &nbsp; &nbsp;     Right-click to remove<br/>URL: " + event.getUri();
+                String out = "<html>Name: " + event.getName() + "&nbsp;(Repeating)<br/>Days: " + days + "<br/> Time: " + event.getTime();
 
                 eventPanel.setLayout(null);
                 JLabel details = new JLabel(out, JLabel.LEFT);
 
                 Dimension size = details.getPreferredSize();
                 details.setLayout(null);
-                details.setBounds(5, -30, size.width * 4, size.height * 2);
+                details.setBounds(5, -20, size.width * 4, size.height * 2);
 
 
                 if (Main.colorTheme.equals("d")) {
@@ -280,8 +304,10 @@ public class EventsWindow {
                     headerLabel.setForeground(darkText);
                     headerPanel2.setForeground(darkText);
                     headerLabel2.setForeground(darkText);
-                    details.setForeground(Color.BLUE.darker());
+                    details.setForeground(darkText);
                     mainFrame.setForeground(darkText);
+                    instruct1.setForeground(darkText);
+                    instruct2.setForeground(darkText);
 
                     int themeColor = 16;
                     Color dark = new Color(themeColor, themeColor, themeColor);
@@ -302,8 +328,10 @@ public class EventsWindow {
                     headerLabel.setForeground(darkText);
                     headerPanel2.setForeground(darkText);
                     headerLabel2.setForeground(darkText);
-                    details.setForeground(Color.BLUE.darker());
+                    details.setForeground(darkText);
                     mainFrame.setForeground(darkText);
+                    instruct1.setForeground(darkText);
+                    instruct2.setForeground(darkText);
 
                     int themeColor = 240;
                     Color dark = new Color(themeColor, themeColor, themeColor);
@@ -376,6 +404,11 @@ public class EventsWindow {
                                     if (file.delete()) Tools.println(file.getName() + " successfully deleted.");
                                     else Tools.println(file.getName() + " could not be deleted.");
 
+                                    try {
+                                        Thread.sleep(5000);
+                                    } catch (InterruptedException interruptedException) {
+                                        interruptedException.printStackTrace();
+                                    }
                                     mainFrame.dispose();
                                 }
                             });
@@ -400,7 +433,7 @@ public class EventsWindow {
             }
         }
 
-        for (int i = 0; i < 27 - added; i++) {
+        for (int i = 0; i < 54 - added; i++) {
             JPanel blankPanel = new JPanel();
 
             if (Main.colorTheme.equals("l")) {
