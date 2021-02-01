@@ -7,7 +7,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class AddRepeatingWindow {
 
@@ -520,7 +519,6 @@ public class AddRepeatingWindow {
         mainFrame.add(controlPanel);
 
         //Add action listeners to control panel buttons
-        ArrayList<RepeatingZoomEvent> finalTempAL = Serialize.fetchRepeating();
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 boolean nameFlag = false;
@@ -579,10 +577,10 @@ public class AddRepeatingWindow {
 
                 if (!nameFlag && !timeFlag && !daysFlag && !linkFlag) {
                     RepeatingZoomEvent temp = new RepeatingZoomEvent(name.getText(), url, time.getText(), daysRepeating);
-                    finalTempAL.add(temp);
-                    Serialize.serializeRepeating(finalTempAL, true);
+                    temp.serialize();
                     mainFrame.dispose();
                     Main.setRerunFlag(true);
+
                 }
             }
         });

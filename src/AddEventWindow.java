@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class AddEventWindow {
 
@@ -134,7 +133,6 @@ public class AddEventWindow {
         mainFrame.add(controlPanel);
 
         //Add action listeners to all buttons
-        ArrayList<ZoomEvent> finalTempARL = Serialize.fetch();
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 boolean nameFlag = false;
@@ -192,8 +190,7 @@ public class AddEventWindow {
 
                 if (!nameFlag && !timeFlag && !dateFlag && !linkFlag) {
                     ZoomEvent temp = new ZoomEvent(name.getText(), url, date.getText(), time.getText());
-                    finalTempARL.add(temp);
-                    Serialize.serialize(finalTempARL, false);
+                    temp.serialize();
                     mainFrame.dispose();
                     Main.setRerunFlag(true);
                 }

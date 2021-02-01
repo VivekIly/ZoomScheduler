@@ -3,7 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Objects;
 
 public class MainWindow {
 
@@ -136,9 +138,6 @@ public class MainWindow {
         controlPanel.add(addEvent);
         controlPanel.add(getList);
 
-        ArrayList<ZoomEvent> arl = Serialize.fetch();
-        ArrayList<RepeatingZoomEvent> arlR = Serialize.fetchRepeating();
-
         //Add action listeners to all buttons
         addRepeating.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -152,9 +151,23 @@ public class MainWindow {
         });
         getList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (arl == null && arlR == null) {
+                File dir = new File(System.getProperty("user.home") + File.separator + "ZoomScheduler - DO NOT TAMPER");
+                File[] zeFiles = dir.listFiles(new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".ze");
+                    }
+                });
+                File[] rzeFiles = dir.listFiles(new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".rze");
+                    }
+                });
+
+                if (zeFiles == null && rzeFiles == null) {
                     statusPanel.setText("There are no events scheduled.");
-                } else if (arl.size() == 0 && arlR.size() == 0) {
+                } else if (Objects.requireNonNull(zeFiles).length == 0 && Objects.requireNonNull(rzeFiles).length == 0) {
                     statusPanel.setText("There are no events scheduled.");
                 } else {
                     EventsWindow eventsWindow = new EventsWindow();
@@ -233,14 +246,7 @@ public class MainWindow {
 
                 yes.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        confirm.dispose();
-
-                        Serialize.serialize(arl, false);
                         Serialize.serializeSettings();
-
-                        Serialize.serializeRepeating(arlR, true);
-
-                        mainFrame.dispose();
                         System.exit(0);
                     }
                 });
@@ -260,11 +266,7 @@ public class MainWindow {
         });
         close.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Serialize.serialize(arl, false);
                 Serialize.serializeSettings();
-
-                Serialize.serializeRepeating(arlR, true);
-
                 mainFrame.dispose();
             }
         });
