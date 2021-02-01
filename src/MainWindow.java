@@ -7,13 +7,12 @@ import java.util.ArrayList;
 
 public class MainWindow {
 
-    public MainWindow() {
-        displayWindow();
-    }
+    private String date;
+    private String time;
 
-    public static void main(String[] args) {
-        MainWindow win = new MainWindow();
-    }
+    public MainWindow() {displayWindow();}
+
+    public static void main(String[] args) {MainWindow win = new MainWindow();}
 
     private void displayWindow() {
         JFrame mainFrame = new JFrame("Zoom Scheduler");
@@ -21,7 +20,10 @@ public class MainWindow {
         mainFrame.setUndecorated(true);
 
         //Set dimensions of window
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); int width = (int) screenSize.getWidth(); int height = (int) screenSize.getHeight(); mainFrame.setSize((int)(width - 100), height - 100);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+        mainFrame.setSize((int) (width - 100), height - 100);
         mainFrame.setShape(new RoundRectangle2D.Double(10, 10, width - 150, height - 150, 50, 50));
 
 
@@ -30,11 +32,12 @@ public class MainWindow {
 
         //Set labels
         JPanel headerPanel = new MotionPanel(mainFrame);
+        headerPanel.setBounds(0, 0, mainFrame.getWidth(), mainFrame.getHeight());
         headerPanel.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLUE));
         headerPanel.setLayout(null);
-        JLabel headerLabel = new JLabel("Zoom Scheduler", JLabel.CENTER);
+        JLabel headerLabel = new JLabel("Zoom Scheduler");
         Dimension size = headerLabel.getPreferredSize();
-        headerLabel.setBounds((int)(width/2.65), 65, size.width*4, size.height*2);
+        headerLabel.setBounds(mainFrame.getWidth()/2 - 125, 40, size.width*4, size.height*2);
         headerLabel.setFont(headerLabel.getFont().deriveFont(32.0f));
         headerPanel.add(headerLabel);
 
@@ -151,6 +154,8 @@ public class MainWindow {
             public void actionPerformed(ActionEvent e) {
                 if (arl == null && arlR == null) {
                     statusPanel.setText("There are no events scheduled.");
+                } else if (arl.size() == 0 && arlR.size() == 0) {
+                    statusPanel.setText("There are no events scheduled.");
                 } else {
                     EventsWindow eventsWindow = new EventsWindow();
                 }
@@ -218,11 +223,12 @@ public class MainWindow {
                 }
 
                 if (Main.colorTheme.equals("l")) {
-                    exitLabel.setForeground(Color.GRAY);
+                    exitLabel.setForeground(Color.BLACK);
 
-                    int themeColor = 245;
+                    int themeColor = 200;
                     Color light = new Color(themeColor, themeColor, themeColor);
-                    confirm.setBackground(light);
+                    exitConfirm.setBackground(light);
+                    exitButtons.setBackground(light);
                 }
 
                 yes.addActionListener(new ActionListener() {

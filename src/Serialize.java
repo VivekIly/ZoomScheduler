@@ -113,20 +113,6 @@ public class Serialize implements Serializable {
     }
 
     public static void serializeRepeating(ArrayList<RepeatingZoomEvent> arrayList, boolean isRepeating) {
-        if (!isRepeating) {
-            try {
-                String name = "events.arl";
-                String outName = System.getProperty("user.home") + File.separator + "ZoomScheduler - DO NOT TAMPER" + File.separator + name;
-                FileOutputStream fileOut = new FileOutputStream(outName);
-                ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                out.writeObject(arrayList);
-                out.close();
-                fileOut.close();
-                System.out.println(name + " saved in " + System.getProperty("user.home") + File.separator + "ZoomScheduler - DO NOT TAMPER" + File.separator + name);
-            } catch (IOException i) {
-                i.printStackTrace();
-            }
-        } else {
             try {
                 String name = "events_repeating.arl";
                 String outName = System.getProperty("user.home") + File.separator + "ZoomScheduler - DO NOT TAMPER" + File.separator + name;
@@ -139,7 +125,6 @@ public class Serialize implements Serializable {
             } catch (IOException i) {
                 i.printStackTrace();
             }
-        }
     }
 
     public static void serializeSettings() {

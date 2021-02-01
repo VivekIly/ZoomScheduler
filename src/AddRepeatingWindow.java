@@ -519,7 +519,7 @@ public class AddRepeatingWindow {
         mainFrame.add(subtext);
         mainFrame.add(controlPanel);
 
-        //Add action listeners to all buttons
+        //Add action listeners to control panel buttons
         ArrayList<RepeatingZoomEvent> finalTempAL = Serialize.fetchRepeating();
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -578,8 +578,8 @@ public class AddRepeatingWindow {
                 subtext.setText(errorMessage);
 
                 if (!nameFlag && !timeFlag && !daysFlag && !linkFlag) {
-                    //RepeatingZoomEvent temp = new RepeatingZoomEvent(name.getText(), url, time.getText(), true, daysRepeating);
-                    finalTempAL.add(new RepeatingZoomEvent(name.getText(), url, time.getText(), true, daysRepeating));
+                    RepeatingZoomEvent temp = new RepeatingZoomEvent(name.getText(), url, time.getText(), daysRepeating);
+                    finalTempAL.add(temp);
                     Serialize.serializeRepeating(finalTempAL, true);
                     mainFrame.dispose();
                     Main.setRerunFlag(true);

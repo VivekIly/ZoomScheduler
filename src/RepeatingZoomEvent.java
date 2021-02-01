@@ -6,14 +6,12 @@ public class RepeatingZoomEvent implements Serializable {
     private String name;
     private URI uri;
     private String time;
-    private boolean repeating;
     private int[] repeatingDays;
 
-    public RepeatingZoomEvent(String name, URI URL, String time, boolean repeating, int[] repeatingDays) {
+    public RepeatingZoomEvent(String name, URI URL, String time, int[] repeatingDays) {
         this.name = name;
         this.uri = URL;
         this.time = time;
-        this.repeating = repeating;
         this.repeatingDays = repeatingDays;
     }
 
@@ -24,6 +22,10 @@ public class RepeatingZoomEvent implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int[] getRepeatingDays() {
+        return repeatingDays;
     }
 
     public String getName() {
@@ -39,14 +41,34 @@ public class RepeatingZoomEvent implements Serializable {
         return uri;
     }
 
-    public boolean isRepeating() {
-        return this.repeating;
-    }
-
     public String toString() {
-        if (!repeating) {
-            return this.time + " " + this.name;
+
+        String returnString = "";
+
+        for (int i : this.repeatingDays) {
+            if (i == 0) {
+                returnString += "M";
+            }
+            if (i == 1) {
+                returnString += "T";
+            }
+            if (i == 2) {
+                returnString += "W";
+            }
+            if (i == 3) {
+                returnString += "Th";
+            }
+            if (i == 4) {
+                returnString += "F";
+            }
+            if (i == 5) {
+                returnString += "Sa";
+            }
+            if (i == 6) {
+                returnString += "Su";
+            }
         }
-        return null;
+
+        return returnString;
     }
 }

@@ -1,4 +1,8 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Main {
 
@@ -33,11 +37,11 @@ public class Main {
         RepeatingZoomEvent[] arrayRepeating = null;
         if (arlR != null) {
             Tools.println("Repeating events: " + arlR);
-            array = new ZoomEvent[arlR.size()];
+            arrayRepeating = new RepeatingZoomEvent[arlR.size()];
 
             int index = 0;
             for (Object o : arlR) {
-                array[index] = (ZoomEvent) o;
+                arrayRepeating[index] = (RepeatingZoomEvent) o;
                 index++;
             }
         }
@@ -48,7 +52,7 @@ public class Main {
                 Main.rerun();
             }
             String time = Tools.getCurrentTime();
-            System.out.print(time);
+            System.out.print(time + " - ");
             Thread.sleep(1000);
             System.out.print("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
 
@@ -140,7 +144,26 @@ public class Main {
         }
     }
 
-    public static void setRerunFlag(boolean bool) {
-        Main.rerunFlag = bool;
+    public static void setRerunFlag(boolean bool) {Main.rerunFlag = bool;}
+
+    public static int getDayOfWeek(String date) {
+        Date date1 = null;
+        try {
+            date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date1);
+        return cal.get(Calendar.DAY_OF_WEEK);
     }
+
+    // TODO: Implement repeating events.
+    // TODO: Fix scheduled events window.
+    // TODO: Display current date and time in the main window.
+    // TODO: Remove past events.
+    // TODO: Remove scheduled event.
+    // TODO: Can only open one of each type of window.
+    // TODO: Move serialization to individual Object classes.
+    // TODO: Fit window to all screen sizes.
 }
