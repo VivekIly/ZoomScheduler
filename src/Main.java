@@ -290,4 +290,10 @@ public class Main {
     // TODO: Fit window to all screen sizes.
     // TODO: Fix bug where Event viewer window doesn't detect events.
     // TODO: Add option to export and import data.
+    // TODO: Detect if user is already in another Zoom meeting. If so, then don't delete, show popup that Zoom meeting could not be opened.
+    // TODO: Play sound and push popup message when link opens.
+    // TODO: Add ability to join meeting with meeting ID and password.
+    // TODO: Event viewer window display more events.
+    // TODO: Can store more events.
+    // TODO: Add shortcuts.
 }
