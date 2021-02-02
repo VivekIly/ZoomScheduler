@@ -281,14 +281,8 @@ public class Main {
         return cal.get(Calendar.DAY_OF_WEEK);
     }
 
-    // TODO: Fix scheduled events window.
-    // TODO: Display current date and time in the main window.
-    // TODO: Remove past events.
-    // TODO: Remove scheduled event.
-    // TODO: Fix NullPointerException after removing an event.
     // TODO: Can only open one of each type of window.
     // TODO: Fit window to all screen sizes.
-    // TODO: Fix bug where Event viewer window doesn't detect events.
     // TODO: Add option to export and import data.
     // TODO: Detect if user is already in another Zoom meeting. If so, then don't delete, show popup that Zoom meeting could not be opened.
     // TODO: Play sound and push popup message when link opens.
@@ -296,6 +290,9 @@ public class Main {
     // TODO: Event viewer window display more events.
     // TODO: Can store more events.
     // TODO: Add shortcuts.
+    // TODO: Save settings and events on the cloud (somehow).
+    //          If saving on cloud, create username and password for security.
+    // TODO: Loading screen
 
     // TODO: README: System requirements.
     // TODO: README: Linux set up.
