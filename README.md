@@ -55,12 +55,22 @@ Under the color theme panel, you will see two buttons named **Hide Window** and 
 At the bottom of the main window, there is a red warning message that reads, "PLEASE DO NOT TAMPER WITH THE 'ZoomScheduler' FOLDER!!" This warning serves as a reminder to not tamper with the program folder. This folder contains all the data for the program to run. Deleting its contents will cause you to lose your data irreversibly. Removing the folder in its entirety is analogous to wiping the program's data and will factory reset the program to its default settings as it was when you first installed it. I am keeping the location of this folder a secret in order to ensure the proper behaviour of the program. Try to find it if you want!
 
 ### Is there a way to export and import settings?
-Great question! As of v1.0.0.0, there is no option to export and import settings. I will, however, making this available in a future version in case it becomes useful. 
+Great question! As of v1.0.0, there is no option to export and import settings. I will, however, making this available in a future version in case it becomes useful. 
 
 ### What do I do if I find a bug?
 PLEASE, PLEASE, PLEASE write an issue on the Github page. You can navigate to the issues section by clicking the tab named **Issues** at the top of the ZoomScheduler Github page. For here, you can click the green **New issue** button to submit any comments, suggestions, and bugs you encounter. I will try my best to review these issues on a regular basis and take them into consideration when adding modifications to the program. 
 
-Please do not treat the issues section as an open forum to discuss personal, poltical, religious, or other irrelevant topics. You have other social media accounts for that. 
+Please do not treat the issues section as an open forum to discuss personal, political, religious, or other irrelevant topics. You have other social media accounts for that. 
 
 ### What are your future plans in terms of the program?
-To find a list of my todo list for the program, scroll to the bottom of the Main.java file in the src folder. If you have any other suggestions, please let me know by opening a Github issue. 
+To find a mroe complete list of my todo list for the program, scroll to the bottom of the Main.java file in the src folder. If you have any other suggestions, please let me know by opening a Github issue. 
+
+Here is a simplified list of my goals for this program:
+1. Detect if the user is already in a meeting. If so, the program should not delete the event and rather, it should push a message to the screen saying that the event could not be opened, because another zoom meeting was open. 
+1. Detect if another window of the same type (event viewer, event adder, etc.) is open. If so, move focus to that window when the button is click, rather than opening another window of that type. 
+1. Fit program to all screen sizes and resolutions. 
+1. Add an option to export and import settings. 
+1. Play a sound and push a message that says that the meeting was opened when the time for a meeting comes. 
+1. Add the ability to join a meeting with the meeting ID and password, rather than just the link. 
+1. Be able to display and store more events. 
+1. Add keyboard shortcuts. 
