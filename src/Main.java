@@ -296,4 +296,7 @@ public class Main {
     // TODO: Event viewer window display more events.
     // TODO: Can store more events.
     // TODO: Add shortcuts.
+
+    // TODO: README: System requirements.
+    // TODO: README: Linux set up.
 }
