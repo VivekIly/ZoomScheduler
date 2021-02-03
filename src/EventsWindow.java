@@ -11,7 +11,7 @@ import java.io.FilenameFilter;
 public class EventsWindow {
 
     public EventsWindow() {
-        prepareWindow();
+        Main.auxWindowOpen = true; prepareWindow();
     }
 
     public static void main(String[] args) {EventsWindow eventsWindow = new EventsWindow();}
@@ -133,8 +133,7 @@ public class EventsWindow {
                     instruct1.setForeground(darkText);
                     instruct2.setForeground(darkText);
 
-                    int themeColor = 16;
-                    Color dark = new Color(themeColor, themeColor, themeColor);
+                    Color dark = new Color(50, 53, 59);
                     eventPanel.setBackground(dark);
                     headerPanel.setBackground(dark);
                     headerLabel.setBackground(dark);
@@ -309,8 +308,7 @@ public class EventsWindow {
                     instruct1.setForeground(darkText);
                     instruct2.setForeground(darkText);
 
-                    int themeColor = 16;
-                    Color dark = new Color(themeColor, themeColor, themeColor);
+                    Color dark = new Color(50, 53, 59);
                     eventPanel.setBackground(dark);
                     headerPanel.setBackground(dark);
                     headerLabel.setBackground(dark);
@@ -436,34 +434,63 @@ public class EventsWindow {
         for (int i = 0; i < 54 - added; i++) {
             JPanel blankPanel = new JPanel();
 
-            if (Main.colorTheme.equals("l")) {
-                int themeColor = 240;
-                Color light = new Color(themeColor, themeColor, themeColor);
-                blankPanel.setBackground(light);
-
-                int textColor = 0;
-                Color lightText = new Color(textColor, textColor, textColor);
-                blankPanel.setForeground(lightText);
-            }
-
             if (Main.colorTheme.equals("d")) {
-                int themeColor = 16;
-                Color dark = new Color(themeColor, themeColor, themeColor);
-                blankPanel.setBackground(dark);
-
                 int textColor = 200;
                 Color darkText = new Color(textColor, textColor, textColor);
                 blankPanel.setForeground(darkText);
+
+                Color dark = new Color(50, 53, 59);
+                blankPanel.setBackground(dark);
+            }
+
+            if (Main.colorTheme.equals("l")) {
+                int textColor = 0;
+                Color darkText = new Color(textColor, textColor, textColor);
+                blankPanel.setForeground(darkText);
+
+                int themeColor = 240;
+                Color dark = new Color(themeColor, themeColor, themeColor);
+                blankPanel.setBackground(dark);
             }
             mainFrame.add(blankPanel);
         }
 
         close.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mainFrame.dispose();
+                mainFrame.dispose(); Main.auxWindowOpen = false;
             }
         });
 
+        if (Main.colorTheme.equals("d")) {
+            int textColor = 200;
+            Color darkText = new Color(textColor, textColor, textColor);
+            headerPanel.setForeground(darkText);
+            headerLabel.setForeground(darkText);
+            headerPanel2.setForeground(darkText);
+            headerLabel2.setForeground(darkText);
+
+            Color dark = new Color(43, 46, 53);
+            headerPanel.setBackground(dark);
+            headerLabel.setBackground(dark);
+            headerPanel2.setBackground(dark);
+            headerLabel2.setBackground(dark);
+        }
+
+        if (Main.colorTheme.equals("l")) {
+            int textColor = 0;
+            Color darkText = new Color(textColor, textColor, textColor);
+            headerPanel.setForeground(darkText);
+            headerLabel.setForeground(darkText);
+            headerPanel2.setForeground(darkText);
+            headerLabel2.setForeground(darkText);
+
+            int themeColor = 240;
+            Color dark = new Color(themeColor, themeColor, themeColor);
+            headerPanel.setBackground(dark);
+            headerLabel.setBackground(dark);
+            headerPanel2.setBackground(dark);
+            headerLabel2.setBackground(dark);
+        }
 
         mainFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         mainFrame.setVisible(true);

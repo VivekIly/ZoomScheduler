@@ -1,3 +1,6 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.text.ParseException;
@@ -9,6 +12,7 @@ import java.util.Date;
 public class Main {
 
     private static boolean rerunFlag = false;
+    public static boolean auxWindowOpen = false;
     public static String colorTheme = "l";
     public static String defaultColorTheme = "l";
     public static String currentTime;
@@ -19,6 +23,38 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
+        JFrame mainFrame = new JFrame();
+        JLabel loadingLabel = new JLabel("Loading...", JLabel.CENTER);
+
+        Main.defaultColorTheme = Serialize.fetchColor();
+        Main.colorTheme = defaultColorTheme;
+
+        if (Main.colorTheme.equals("d")) {
+            int textColor = 200;
+            Color darkText = new Color(textColor, textColor, textColor);
+            loadingLabel.setForeground(darkText);
+
+            int themeColor = 25;
+            Color dark = new Color(54, 57, 63);
+            mainFrame.getContentPane().setBackground(dark);
+        }
+
+        if (Main.colorTheme.equals("l")) {
+            mainFrame.getContentPane().setBackground(Color.WHITE);
+            loadingLabel.setForeground(Color.BLACK);
+        }
+
+        mainFrame.setSize(100, 50);
+        mainFrame.setUndecorated(true);
+        mainFrame.setShape(new RoundRectangle2D.Double(0, 0, mainFrame.getWidth(), mainFrame.getHeight(), 20, 20));
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        mainFrame.setLocation(dim.width/2-mainFrame.getSize().width/2, dim.height/2-mainFrame.getSize().height/2);
+
+        mainFrame.add(loadingLabel);
+        mainFrame.setVisible(true);
+        mainFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+
         Main.today = getDayOfWeek(Tools.getDate(), "yyyy/MM/dd");
         if (Main.today == 1) {
             Main.today = 6;
@@ -28,11 +64,8 @@ public class Main {
 
         Serialize.initSerialize();
 
-        Main.defaultColorTheme = Serialize.fetchColor();
-        Main.colorTheme = defaultColorTheme;
-
         Main.currentTime = Tools.getCurrentTime();
-        mainWindow = new MainWindow();
+
 
         File dir = new File(System.getProperty("user.home") + File.separator + "ZoomScheduler - DO NOT TAMPER");
         File[] zeFiles = dir.listFiles(new FilenameFilter() {
@@ -76,6 +109,10 @@ public class Main {
         } else {
             Tools.println("Repeating events: []");
         }
+
+        Thread.sleep(1000);
+        mainWindow = new MainWindow();
+        mainFrame.dispose();
 
         for (int a = 0; a < 1; a--) {
             Main.currentTime = Tools.getCurrentTime();
@@ -290,10 +327,42 @@ public class Main {
     // TODO: Event viewer window display more events.
     // TODO: Can store more events.
     // TODO: Add shortcuts.
-    // TODO: Save settings and events on the cloud (somehow).
-    //          If saving on cloud, create username and password for security.
-    // TODO: Loading screen
+    // TODO: Add minimize window feature.
+    // TODO: Rearrange by event date.
+    // TODO: Detect if offline. If so, push message saying meeting could not be offline because device is offline.
+
+    //TODO: Create an exe installer package.
 
     // TODO: README: System requirements.
     // TODO: README: Linux set up.
+    // TODO: README: Zoom settings.
 }
+
+/*
+
+v1.0.1 changes:
+
+Loading window when application initially starts up.
+Improve aesthetic look and feel of dark theme.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ */

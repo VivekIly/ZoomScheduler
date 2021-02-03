@@ -41,7 +41,7 @@ public class MainWindow {
         headerPanel.setLayout(null);
         JLabel headerLabel = new JLabel("Zoom Scheduler");
         Dimension size = headerLabel.getPreferredSize();
-        headerLabel.setBounds(mainFrame.getWidth()/2 - 125, 40, size.width*4, size.height*2);
+        headerLabel.setBounds(mainFrame.getWidth()/2 - 125, headerPanel.getHeight()/20, size.width*4, size.height*2);
         headerLabel.setFont(headerLabel.getFont().deriveFont(32.0f));
         headerPanel.add(headerLabel);
 
@@ -50,6 +50,7 @@ public class MainWindow {
 
         JLabel subtext = new JLabel("PLEASE DO NOT TAMPER WITH THE \'ZoomScheduler\' FOLDER!!",JLabel.CENTER);
         subtext.setSize((int)(width),100);
+        subtext.setFont(headerLabel.getFont().deriveFont(16.0f));
         subtext.setForeground(Color.RED);
 
         //Create control panel for buttons
@@ -84,6 +85,8 @@ public class MainWindow {
         exitPanel.setLayout(new FlowLayout());
         JButton exit = new JButton("Exit Application");
         JButton close = new JButton("Hide Window");
+        JButton min = new JButton("Minimize Window");
+        exitPanel.add(min);
         exitPanel.add(close);
         exitPanel.add(exit);
 
@@ -103,9 +106,8 @@ public class MainWindow {
             statusPanel.setForeground(darkText);
             exitPanel.setForeground(darkText);
 
-            int themeColor = 25;
-            Color dark = new Color(themeColor, themeColor, themeColor);
-            headerPanel.setBackground(dark);
+            Color dark = new Color(54, 57, 63);
+            headerPanel.setBackground(new Color(47, 50, 54));
             controlPanel.setBackground(dark);
             themePanel.setBackground(dark);
             statusPanel.setBackground(dark);
@@ -121,7 +123,7 @@ public class MainWindow {
             exitPanel.setForeground(Color.BLACK);
 
             controlPanel.setBackground(Color.WHITE);
-            headerPanel.setBackground(Color.WHITE);
+            headerPanel.setBackground(new Color(230, 230, 230));
             themePanel.setBackground(Color.WHITE);
             exitPanel.setBackground(Color.WHITE);
             mainFrame.getContentPane().setBackground(Color.WHITE);
@@ -278,6 +280,12 @@ public class MainWindow {
                 mainFrame.dispose();
             }
         });
+        min.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mainFrame.setState(Frame.ICONIFIED);
+            }
+        });
+
 
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);

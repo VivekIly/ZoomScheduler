@@ -93,8 +93,7 @@ public class AddEventWindow {
             timeLabel.setForeground(darkText);
             linkLabel.setForeground(darkText);
 
-            int themeColor = 16;
-            Color dark = new Color(themeColor, themeColor, themeColor);
+            Color dark = new Color(40, 43, 49);
             headerPanel.setBackground(dark);
             controlPanel.setBackground(dark);
             namePanel.setBackground(dark);
@@ -103,7 +102,6 @@ public class AddEventWindow {
             linkPanel.setBackground(dark);
             mainFrame.getContentPane().setBackground(dark);
         }
-
         if (Main.colorTheme.equals("l")) {
             headerLabel.setForeground(Color.GRAY);
             namePanel.setForeground(Color.BLACK);

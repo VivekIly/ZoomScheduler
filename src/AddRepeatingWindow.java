@@ -474,8 +474,7 @@ public class AddRepeatingWindow {
             timeLabel.setForeground(darkText);
             linkLabel.setForeground(darkText);
 
-            int themeColor = 20;
-            Color dark = new Color(themeColor, themeColor, themeColor);
+            Color dark = new Color(40, 43, 49);
             mainFrame.setBackground(dark);
             headerPanel.setBackground(dark);
             headerLabel.setBackground(dark);
@@ -488,7 +487,6 @@ public class AddRepeatingWindow {
             subtext.setBackground(dark);
             mainFrame.getContentPane().setBackground(dark);
         }
-
         if (Main.colorTheme.equals("l")) {
             headerLabel.setForeground(Color.GRAY);
             namePanel.setForeground(Color.BLACK);
