@@ -3,9 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
-import java.io.File;
-import java.io.FilenameFilter;
+import java.io.*;
 import java.util.Objects;
+import java.util.zip.GZIPOutputStream;
 
 public class MainWindow {
 
@@ -14,12 +14,18 @@ public class MainWindow {
 
     private JLabel timeLabel;
 
-    public MainWindow() {displayWindow();}
+    private JFrame mainFrame;
 
-    public static void main(String[] args) {MainWindow win = new MainWindow();}
+    public MainWindow() {
+        displayWindow();
+    }
+
+    public static void main(String[] args) {
+        MainWindow win = new MainWindow();
+    }
 
     private void displayWindow() {
-        JFrame mainFrame = new JFrame("Zoom Scheduler");
+        mainFrame = new JFrame("Zoom Scheduler");
         //mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainFrame.setUndecorated(true);
 
@@ -28,28 +34,28 @@ public class MainWindow {
         int width = (int) screenSize.getWidth();
         int height = (int) screenSize.getHeight();
         mainFrame.setSize((int) (width - 100), height - 100);
-        mainFrame.setShape(new RoundRectangle2D.Double(10, 10, width - 150, height - 150, 50, 50));
+        mainFrame.setShape(new RoundRectangle2D.Double(0, 0, width - 150, height - 150, 50, 50));
 
 
         //Set layout
-        mainFrame.setLayout(new GridLayout(8, 1));
+        mainFrame.setLayout(new GridLayout(9, 1));
 
         //Set labels
         JPanel headerPanel = new MotionPanel(mainFrame);
         headerPanel.setBounds(0, 0, mainFrame.getWidth(), mainFrame.getHeight());
-        headerPanel.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLUE));
+        headerPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, Color.BLUE));
         headerPanel.setLayout(null);
         JLabel headerLabel = new JLabel("Zoom Scheduler");
         Dimension size = headerLabel.getPreferredSize();
-        headerLabel.setBounds(mainFrame.getWidth()/2 - 125, headerPanel.getHeight()/20, size.width*4, size.height*2);
+        headerLabel.setBounds(mainFrame.getWidth() / 2 - 125, headerPanel.getHeight() / 20, size.width * 4, size.height * 2);
         headerLabel.setFont(headerLabel.getFont().deriveFont(32.0f));
         headerPanel.add(headerLabel);
 
         JLabel subheaderLabel = new JLabel("Select the action you would like to take: ", JLabel.CENTER);
-        subheaderLabel.setSize((int)(width), 100);
+        subheaderLabel.setSize((int) (width), 100);
 
-        JLabel subtext = new JLabel("PLEASE DO NOT TAMPER WITH THE \'ZoomScheduler\' FOLDER!!",JLabel.CENTER);
-        subtext.setSize((int)(width),100);
+        JLabel subtext = new JLabel("PLEASE DO NOT TAMPER WITH THE \'ZoomScheduler\' FOLDER!!", JLabel.CENTER);
+        subtext.setSize((int) (width), 100);
         subtext.setFont(headerLabel.getFont().deriveFont(16.0f));
         subtext.setForeground(Color.RED);
 
@@ -75,6 +81,13 @@ public class MainWindow {
         }
         themePanel.add(theme);
         themePanel.add(defaultTheme);
+
+        //Create export/import panel
+        JPanel exportPanel = new JPanel();
+        JButton exportButton = new JButton("Export settings");
+        JButton importButton = new JButton("Import settings");
+        exportPanel.add(exportButton);
+        exportPanel.add(importButton);
 
         //Create status panel
         JLabel statusPanel = new JLabel("", JLabel.CENTER);
@@ -103,6 +116,7 @@ public class MainWindow {
             subheaderLabel.setForeground(darkText);
             controlPanel.setForeground(darkText);
             themePanel.setForeground(darkText);
+            exportPanel.setForeground(darkText);
             statusPanel.setForeground(darkText);
             exitPanel.setForeground(darkText);
 
@@ -110,6 +124,7 @@ public class MainWindow {
             headerPanel.setBackground(new Color(47, 50, 54));
             controlPanel.setBackground(dark);
             themePanel.setBackground(dark);
+            exportPanel.setBackground(dark);
             statusPanel.setBackground(dark);
             exitPanel.setBackground(dark);
             mainFrame.getContentPane().setBackground(dark);
@@ -136,6 +151,7 @@ public class MainWindow {
         mainFrame.add(controlPanel);
         mainFrame.add(statusPanel);
         mainFrame.add(themePanel);
+        mainFrame.add(exportPanel);
         mainFrame.add(exitPanel);
         mainFrame.add(subtext);
 
@@ -212,6 +228,55 @@ public class MainWindow {
                 MainWindow mainWindow = new MainWindow();
             }
         });
+        exportButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                File dir = new File(System.getProperty("user.home") + File.separator + "ZoomScheduler - DO NOT TAMPER");
+                File[] zeFiles = dir.listFiles(new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".ze");
+                    }
+                });
+
+                File[] rzeFiles = dir.listFiles(new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".rze");
+                    }
+                });
+                if (zeFiles != null || rzeFiles != null) {
+                    try (
+                            FileOutputStream fos = new FileOutputStream(new File(System.getProperty("user.home") + "/Downloads/ZoomScheduler - Export.zsx"));
+                            GZIPOutputStream gos = new GZIPOutputStream(fos);
+                            ObjectOutputStream oos = new ObjectOutputStream(gos)) {
+
+                                if (zeFiles != null && zeFiles.length > 0) {
+                                    for (File f : zeFiles) {
+                                        oos.writeObject(f);
+                                    }
+                                }
+
+                                if (rzeFiles != null && rzeFiles.length > 0) {
+                                    for (File f : rzeFiles) {
+                                        oos.writeObject(f);
+                                    }
+                                }
+                        oos.flush();
+                    } catch (IOException a) {
+                        a.printStackTrace();
+                    }
+                }
+
+                if (Tools.fileExists("ZoomScheduler - Export.zsx", new File(System.getProperty("user.home") + "/Downloads/"))) {
+                    statusPanel.setText("Settings and data successfully exported to Downloads folder with the name: ZoomScheduler - Export.zsx");
+                }
+            }
+        });
+        importButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         exit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -222,7 +287,7 @@ public class MainWindow {
                 confirm.setLayout(new GridLayout(2, 1));
 
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-                confirm.setLocation(dim.width/2-confirm.getSize().width/2, dim.height/2-confirm.getSize().height/2);
+                confirm.setLocation(dim.width / 2 - confirm.getSize().width / 2, dim.height / 2 - confirm.getSize().height / 2);
 
                 JPanel exitConfirm = new JPanel();
                 JLabel exitLabel = new JLabel("Are you sure you want to exit?");
@@ -300,5 +365,5 @@ public class MainWindow {
         this.timeLabel.setText(str);
     }
 
-
+    public final JFrame getMainFrame() {return this.mainFrame;}
 }

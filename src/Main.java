@@ -23,11 +23,12 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
+
+
+        Main.colorTheme = "d";
+
         JFrame mainFrame = new JFrame();
         JLabel loadingLabel = new JLabel("Loading...", JLabel.CENTER);
-
-        Main.defaultColorTheme = Serialize.fetchColor();
-        Main.colorTheme = defaultColorTheme;
 
         if (Main.colorTheme.equals("d")) {
             int textColor = 200;
@@ -62,7 +63,13 @@ public class Main {
             Main.today -= 2;
         }
 
+        Thread.sleep(600);
+        loadingLabel.setText("Initializing...");
+
         Serialize.initSerialize();
+
+        Main.defaultColorTheme = Serialize.fetchColor();
+        Main.colorTheme = defaultColorTheme;
 
         Main.currentTime = Tools.getCurrentTime();
 
@@ -330,8 +337,9 @@ public class Main {
     // TODO: Add minimize window feature.
     // TODO: Rearrange by event date.
     // TODO: Detect if offline. If so, push message saying meeting could not be offline because device is offline.
+    // TODO: Hide folder or set read only. 
 
-    //TODO: Create an exe installer package.
+    // TODO: Create an exe installer package.
 
     // TODO: README: System requirements.
     // TODO: README: Linux set up.
@@ -344,7 +352,7 @@ v1.0.1 changes:
 
 Loading window when application initially starts up.
 Improve aesthetic look and feel of dark theme.
-
+Added an export settings option.
 
 
 
