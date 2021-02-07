@@ -1,2 +1,0 @@
-C:\Users\Vivek\OneDrive\Documents\GitHub\ZoomScheduler\ZoomScheduler_C++\Control Panel\Debug\Control Panel.exe
-C:\Users\Vivek\OneDrive\Documents\GitHub\ZoomScheduler\ZoomScheduler_C++\Control Panel\Debug\Control Panel.pdb

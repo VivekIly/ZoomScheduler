@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Vivek/OneDrive/Documents/GitHub/ZoomScheduler/cpp/ZoomScheduler_CLion/Main/main.cpp
+Windows.h
+-
+iostream
+-
+cstdlib
+-
+chrono
+-
+thread
+-
+
