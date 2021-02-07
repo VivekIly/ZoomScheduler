@@ -143,7 +143,7 @@ public class Main {
                 Main.rerun();
             }
 
-            System.out.print(Main.currentTime + " - ");
+            System.out.print(Main.currentTime + "> ");
             Thread.sleep(1000);
             System.out.print("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
 
@@ -260,7 +260,7 @@ public class Main {
                 Main.rerun();
             }
 
-            System.out.print(Main.currentTime + " - ");
+            System.out.print(Main.currentTime + "> ");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -337,7 +337,7 @@ public class Main {
     // TODO: Add minimize window feature.
     // TODO: Rearrange by event date.
     // TODO: Detect if offline. If so, push message saying meeting could not be offline because device is offline.
-    // TODO: Hide folder or set read only. 
+    // TODO: Hide folder or set read only.
 
     // TODO: Create an exe installer package.
 
