@@ -1,2 +1,0 @@
-C:\Users\Vivek\OneDrive\Documents\GitHub\ZoomScheduler\ZoomScheduler_C++\Debug\ZoomScheduler_C++.exe
-C:\Users\Vivek\OneDrive\Documents\GitHub\ZoomScheduler\ZoomScheduler_C++\Debug\ZoomScheduler_C++.pdb
