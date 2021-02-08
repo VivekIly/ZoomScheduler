@@ -25,14 +25,6 @@ public class ZoomEvent implements Serializable {
         }
     }
 
-    public ZoomEvent(String name, URI URL, String time, boolean repeating, int[] repeatingDays) {
-        this.name = name;
-        this.uri = URL;
-        this.time = time;
-        this.repeating = repeating;
-        this.repeatingDays = repeatingDays;
-    }
-
     public void openLink() {
         try {
             java.awt.Desktop.getDesktop().browse(this.uri);

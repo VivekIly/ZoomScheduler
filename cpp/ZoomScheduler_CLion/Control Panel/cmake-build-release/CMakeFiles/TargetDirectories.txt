@@ -1,3 +1,0 @@
-C:/Users/Vivek/OneDrive/Documents/GitHub/ZoomScheduler/cpp/ZoomScheduler_CLion/Control Panel/cmake-build-release/CMakeFiles/Control_Panel.dir
-C:/Users/Vivek/OneDrive/Documents/GitHub/ZoomScheduler/cpp/ZoomScheduler_CLion/Control Panel/cmake-build-release/CMakeFiles/edit_cache.dir
-C:/Users/Vivek/OneDrive/Documents/GitHub/ZoomScheduler/cpp/ZoomScheduler_CLion/Control Panel/cmake-build-release/CMakeFiles/rebuild_cache.dir

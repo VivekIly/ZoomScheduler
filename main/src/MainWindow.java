@@ -58,6 +58,7 @@ public class MainWindow {
         subtext.setSize((int) (width), 100);
         subtext.setFont(headerLabel.getFont().deriveFont(16.0f));
         subtext.setForeground(Color.RED);
+        subtext.setBounds(0, mainFrame.getHeight() - 60, mainFrame.getWidth(), 50);
 
         //Create control panel for buttons
         JPanel controlPanel = new JPanel();
@@ -86,6 +87,7 @@ public class MainWindow {
         JPanel exportPanel = new JPanel();
         JButton exportButton = new JButton("Export settings");
         JButton importButton = new JButton("Import settings");
+        exportPanel.setSize(mainFrame.getWidth(), 5);
         exportPanel.add(exportButton);
         exportPanel.add(importButton);
 
@@ -134,6 +136,7 @@ public class MainWindow {
             headerLabel.setForeground(Color.GRAY);
             subheaderLabel.setForeground(Color.BLACK);
             controlPanel.setForeground(Color.BLACK);
+            exportPanel.setForeground(Color.BLACK);
             themePanel.setForeground(Color.BLACK);
             exitPanel.setForeground(Color.BLACK);
 
@@ -141,6 +144,7 @@ public class MainWindow {
             headerPanel.setBackground(new Color(230, 230, 230));
             themePanel.setBackground(Color.WHITE);
             exitPanel.setBackground(Color.WHITE);
+            exportPanel.setBackground(Color.WHITE);
             mainFrame.getContentPane().setBackground(Color.WHITE);
         }
 
@@ -342,7 +346,7 @@ public class MainWindow {
         close.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Serialize.serializeSettings();
-                mainFrame.dispose();
+                mainFrame.setVisible(false);
             }
         });
         min.addActionListener(new ActionListener() {
