@@ -3,6 +3,6 @@
 
 void help();
 void restart();
-void createEvent();
+void create();
 
 #endif

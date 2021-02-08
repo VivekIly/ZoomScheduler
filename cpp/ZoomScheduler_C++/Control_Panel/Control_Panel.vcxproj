@@ -141,11 +141,15 @@
   <ItemGroup>
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Control_Panel.cpp" />
+    <ClCompile Include="RepeatingZoomEvent.cpp" />
+    <ClCompile Include="ZoomEvent.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cereal.h" />
     <ClInclude Include="Commands.h" />
+    <ClInclude Include="RepeatingZoomEvent.h" />
+    <ClInclude Include="ZoomEvent.h" />
     <ClInclude Include="portable_binary.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
