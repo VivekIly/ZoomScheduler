@@ -1,0 +1,2 @@
+C:\Users\Vivek\OneDrive\Documents\GitHub\ZoomScheduler\cpp\ZoomScheduler_C++\RestartZScpp\Debug\RestartZScpp.exe
+C:\Users\Vivek\OneDrive\Documents\GitHub\ZoomScheduler\cpp\ZoomScheduler_C++\RestartZScpp\Debug\RestartZScpp.pdb
