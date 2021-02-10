@@ -7,7 +7,7 @@
 #include "Commands.h"
 
 void help() {
-	std::cout << "List of commands: \n\n\'-restart\':\tRestarts the application. Reopens the Control Panel console and the main application in the background.\n\'-exit\':\tExits the application after safely storing data.\n\n";
+	std::cout << "List of commands: \n\n\'-restart\':\tRestarts the application to refresh data.\n\'-exit\':\tExits the application after safely storing data.\n\'-create\':\tOpens the create event wizard which guides the user through creating a new event.\n\'-toggle\':\tToggles the temporary visibility of the event viewer window.\n\'-toggle def\':\tToggles the default visibility of the event viewer window.\n\n";
 }
 
 void restart() {
@@ -51,4 +51,23 @@ void create() {
 		temp.serialize();
 		restart();
 	}
+}
+
+void toggleMainVisibility() {
+	if (toggleMainVisOut())
+		std::cout << "Event viewer window temporary visibility set to true.\n\n";
+	else
+		std::cout << "Event viewer window temporary visibility set to false.\n\n";
+}
+
+void toggleDefMainVisibility() {
+	if (toggleDefMainVisOut())
+		std::cout << "Event viewer window default visibility set to true.\n";
+	else
+		std::cout << "Event viewer window default visibility set to false.\n";
+
+	if (toggleMainVisOut())
+		std::cout << "Event viewer window temporary visibility set to true.\n\n";
+	else
+		std::cout << "Event viewer window temporary visibility set to false.\n\n";
 }

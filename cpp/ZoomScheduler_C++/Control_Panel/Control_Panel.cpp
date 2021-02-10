@@ -11,12 +11,12 @@
 
 int main() {
 
-	//Print welcome message.
-	std::cout << "Welcome to the ZoomScheduler control panel! Enter any commands here to control the program. Type '-help' to display list of commands. Use the '-exit' command to close the application rather than manually pressing the red X in order to ensure all data has been saved properly.\n\n";
-
 	initialize();
 
-	startMain();
+	startMainZS();
+
+	//Print welcome message.
+	std::cout << "Welcome to the ZoomScheduler control panel! Enter any commands here to control the program. \nType '-help' to display list of commands.\n";
 
 	//Starts loop of command inputs. 
 	getCommand(true);

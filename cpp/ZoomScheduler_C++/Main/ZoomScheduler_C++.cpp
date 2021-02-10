@@ -5,6 +5,11 @@
 #include "ZoomEvent.h"
 #include "RepeatingZoomEvent.h"
 
+inline bool endsIn(std::string const& value, std::string const& ending) {
+	if (ending.size() > value.size()) return false;
+	return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+}
+
 int main() {
 
 	std::cout << "Program logs window. View any changes to the program and events that take place here.\n\n";
@@ -17,7 +22,9 @@ int main() {
 
 	for (int i = 0; i < 1; i--) {
 		if (!isVisible())
-			//hideConsole();
+			hideConsole();
+		else
+			showConsole();
 
 	    std::cout << '\r' << getCurrentTime();
 	    std::cout.flush();

@@ -8,7 +8,7 @@
 
 #include "Util.h"
 
-std::string commands[] = { "-help", "-exit", "-restart", "-create" };
+std::string commands[] = { "-help", "-exit", "-restart", "-create", "-toggle", "-toggle def" };
 
 char* getCurrentDateTime() {
 	time_t rawtime;
@@ -74,6 +74,7 @@ void initialize() {
 			std::ofstream outFileDef;
 			outFileDef.open(filePathDefault.c_str());
 			outFileDef << "true";
+			def = "true";
 			outFileDef.close();
 		}
 		else {
@@ -90,11 +91,11 @@ void initialize() {
 	}
 }
 
-void startMain() {
+void startMainZS() {
 
 	std::cout << "Checking if main application is running . . .\n";
 
-	if (!IsMainRunning) {
+	if (!IsMainRunning()) {
 
 		std::cout << "Main application is not running. Attempting to open main application . . .\n";
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
@@ -143,6 +144,12 @@ void runCommand(std::string& command) {
 	else if (command == "-create") {
 		create();
 	}
+	else if (command == "-toggle") {
+		toggleMainVisibility();
+	}
+	else if (command == "-toggle def") {
+		toggleDefMainVisibility();
+	}
 
 	//std::cout << '\r' << std::flush;
 }
@@ -157,7 +164,7 @@ void getCommand(bool displayInd) {
 
 	if (cmd != "-exit zs") {
 		runCommand(cmd);
-		getCommand(false);
+		getCommand(true);
 	}
 
 
@@ -188,6 +195,60 @@ bool IsMainRunning() {
 
 void hideConsole() {
 	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+}
+
+bool toggleMainVisOut() {
+	char path[MAX_PATH];
+	SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path);
+
+	std::string dirPath(path);
+	dirPath += "\\ZoomScheduler - DO NOT TAMPER";
+
+	std::string filePathTemp{ dirPath + "\\eventViewerVisible.txt" };
+
+	std::string tempVisibility;
+
+	std::ifstream inFileTemp;
+	inFileTemp.open(filePathTemp);
+
+	getline(inFileTemp, tempVisibility);
+
+	std::ofstream outFileTemp;
+	outFileTemp.open(filePathTemp.c_str());
+
+	std::string newVis = (tempVisibility == "true") ? "false" : "true";
+
+	outFileTemp << newVis;
+	outFileTemp.close();
+
+	return (newVis == "true");
+}
+
+bool toggleDefMainVisOut() {
+	char path[MAX_PATH];
+	SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path);
+
+	std::string dirPath(path);
+	dirPath += "\\ZoomScheduler - DO NOT TAMPER";
+
+	std::string filePathTemp{ dirPath + "\\eventViewerDefaultVisibility.txt" };
+
+	std::string defVisibility;
+
+	std::ifstream inFileDef;
+	inFileDef.open(filePathTemp);
+
+	getline(inFileDef, defVisibility);
+
+	std::ofstream outFileDef;
+	outFileDef.open(filePathTemp.c_str());
+
+	std::string newVis = (defVisibility == "true") ? "false" : "true";
+
+	outFileDef << newVis;
+	outFileDef.close();
+
+	return (newVis == "true");
 }
 
 void showConsole() {

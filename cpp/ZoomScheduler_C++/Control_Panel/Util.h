@@ -13,13 +13,15 @@ char* getCurrentDateTime();
 char* getCurrentDateTimeName();
 char* getCurrentTime();
 void initialize();
-void startMain();
+void startMainZS();
 void checkSyntax(std::string command);
 void runCommand(std::string& command);
 void getCommand(bool displayInd);
 inline bool fileExists(const std::string& name);
 bool IsMainRunning();
 void hideConsole();
+bool toggleMainVisOut();
+bool toggleDefMainVisOut();
 void showConsole();
 char* getCurrentTime();
 

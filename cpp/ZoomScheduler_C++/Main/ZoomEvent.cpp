@@ -60,7 +60,6 @@ bool ZoomEvent::serialize() {
 
 ZoomEvent ZoomEvent::fetch(std::string filePath) {
 
-	std::cout << "Fetching data . . .\n";
 	std::fstream inFile;
 	inFile.open(filePath.c_str(), std::ios::in);
 
