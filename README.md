@@ -15,7 +15,7 @@ ZoomScheduler is a lightweight program that automatically open your Zoom meeting
         1. Download and run the file to install Java.
         1. After Java has been installed, open the ZoomScheduler.exe file. If an error message occurs,
            follow [this link](https://javatutorial.net/set-java-home-windows-10) to troubleshoot further.
-1. If Java installation was successfull, you should now see a screen with the heading "Zoom Scheduler" once you
+1. If Java installation was successful, you should now see a screen with the heading "Zoom Scheduler" once you
    double-click the .exe file. Now, the program is ready to use. Enjoy!
 
 #### Recommended for Windows users: Start ZoomScheduler on startup
@@ -37,6 +37,9 @@ To set the ZoomScheduler.exe file to run on startup:
 
 Follow [this link](https://support.microsoft.com/en-us/windows/add-an-app-to-run-automatically-at-startup-in-windows-10-150da165-dcd9-7230-517b-cf3c295d89dd)
 for further troubleshooting.
+
+##### UPCOMING FOR WINDOWS: Improved compatibility without Java installation and setup.
+Java installation can be difficult and confusing, and sometimes, it may not even end up working. Because of this reason, I am working on a console-based program that will not require the installation of Java. It will simply be a matter of downloading the files to the appropriate filepaths and opening the program. This new program has been and will be requiring a lot of learning on my part, so please let me know if anything can or should be improved and I will try to meet your needs. 
 
 ### macOS
 
