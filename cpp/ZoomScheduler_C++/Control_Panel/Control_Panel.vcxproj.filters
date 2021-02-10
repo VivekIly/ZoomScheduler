@@ -38,12 +38,6 @@
     <ClInclude Include="Commands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="portable_binary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cereal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ZoomEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>

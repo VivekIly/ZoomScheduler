@@ -1,36 +1,41 @@
-#include <Windows.h>
 #include <iostream>
-#include <cstdlib>
-#include <chrono>
 #include <thread>
+#include <stdio.h>
 #include "Util.h"
-#include <string>
-#include <shlobj.h>
+#include "ZoomEvent.h"
+#include "RepeatingZoomEvent.h"
 
 int main() {
-
-	/*char path[MAX_PATH];
-	if (SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path) != S_OK)
-	{
-		cout << "I could not retrieve the user's home directory!\n";
-	}
-	else
-	{
-		cout << "Home directory = \"" << path << "\"\n";
-	}*/
 
 	std::cout << "Program logs window. View any changes to the program and events that take place here.\n\n";
 	std::cout.flush();
 
-	//hideConsole();
+	ZoomEvent fetchZE;
+	RepeatingZoomEvent fetchRZE;
+
+	std::vector<std::string> files = getFiles();
 
 	for (int i = 0; i < 1; i--) {
+		if (!isVisible())
+			//hideConsole();
+
 	    std::cout << '\r' << getCurrentTime();
 	    std::cout.flush();
+
+		files = getFiles();
+
+		for (std::string s : files) {
+			if (endsIn(s, ".ze")) {
+				ZoomEvent temp = fetchZE.fetch(s);
+				if (getCurrentDateComp() == temp.getDate() && getCurrentTimeComp() == temp.getTime()) {
+					temp.openLink();
+					remove(s.c_str());
+				}
+			}
+		}
+
 	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	}
-
-	
 
 	return 0;
 }

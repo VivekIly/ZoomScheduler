@@ -1,7 +1,10 @@
 #include <iostream>
+#include <string>
+#include <regex>
+#include "Util.h"
 #include "ZoomEvent.h"
 #include "RepeatingZoomEvent.h"
-
+#include "Commands.h"
 
 void help() {
 	std::cout << "List of commands: \n\n\'-restart\':\tRestarts the application. Reopens the Control Panel console and the main application in the background.\n\'-exit\':\tExits the application after safely storing data.\n\n";
@@ -18,24 +21,34 @@ void create() {
 	std::cin >> eventType;
 
 	if (eventType == 1) {
+		std::string buffer{};
 		std::string name{};
 		std::string url{};
 		std::string date{};
 		std::string time{};
 
+		std::getline(std::cin, buffer);
+
 		std::cout << "Name: ";
-		std::cin >> name;
+		std::getline(std::cin, name);
+
+		while (name == "") {
+			std::cout << "Invalid name. Please try again.\n";
+			std::cout << "Name: ";
+			std::getline(std::cin, name);
+		}
 
 		std::cout << "URL: ";
-		std::cin >> url;
+		std::getline(std::cin, url);
 
-		std::cout << "Date: ";
-		std::cin >> date;
+		std::cout << "Date ( yyyy/MM/dd ): ";
+		std::getline(std::cin, date);
 
-		std::cout << "Time: ";
-		std::cin >> time;
+		std::cout << "Time ( 24-hour HH:MM(:SS) ): ";
+		std::getline(std::cin, time);
 
 		ZoomEvent temp (name, url, date, time);
 		temp.serialize();
+		restart();
 	}
 }
