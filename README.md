@@ -10,7 +10,7 @@ ZoomScheduler is a lightweight program that automatically open your Zoom meeting
     1. Downloading the .jar file also works, but the .exe file is better suited for Windows.
 1. If using the .exe file, open the file by double-clicking.
     1. If you have not installed Java on your system yet, the program will direct you to a safe, official website to
-       download the latest version of Java.
+       download the latest version of Java. **NOTICE: I am currently working on releasing a program that does not require the installation of Java. Until then, you will need to install Java on your machine.**
         1. Click [here](http://java.com/download) for the same link
         1. Download and run the file to install Java.
         1. After Java has been installed, open the ZoomScheduler.exe file. If an error message occurs,
