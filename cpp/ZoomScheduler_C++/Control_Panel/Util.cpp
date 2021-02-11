@@ -5,10 +5,11 @@
 #include <tlhelp32.h>
 #include <shlobj.h>
 #include <direct.h>
+#include <vector>
 
 #include "Util.h"
 
-std::string commands[] = { "-help", "-exit zs", "-restart", "-create", "-toggle", "-toggle def" };
+std::string commands[] = { "-help", "-exit", "-restart", "-create", "-toggle", "-toggle def", "-check", "-show", "-kill main" };
 
 char* getCurrentDateTime() {
 	time_t rawtime;
@@ -150,8 +151,17 @@ void runCommand(std::string& command) {
 	else if (command == "-toggle def") {
 		toggleDefMainVisibility();
 	}
+	else if (command == "-check") {
+		check();
+	}
+	else if (command == "-show") {
+		show();
+	}
+	else if (command == "-kill main") {
+		killMain();
+		std::cout << '\n';
+	}
 
-	//std::cout << '\r' << std::flush;
 }
 
 void getCommand(bool displayInd) {
@@ -162,7 +172,7 @@ void getCommand(bool displayInd) {
 
 	checkSyntax(cmd);
 
-	if (cmd != "-exit zs") {
+	if (cmd != "-exit") {
 		runCommand(cmd);
 		getCommand(true);
 	}
@@ -172,6 +182,7 @@ void getCommand(bool displayInd) {
 	killMain();
 	std::cout << "Closing control panel in 5 seconds . . .\n";
 	std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+	killCP();
 }
 
 inline bool fileExists(const std::string& name) {
@@ -195,9 +206,30 @@ bool IsMainRunning() {
 	return exists;
 }
 
+bool IsCPRunning() {
+	bool exists = false;
+	PROCESSENTRY32 entry;
+	entry.dwSize = sizeof(PROCESSENTRY32);
+
+	HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+
+	if (Process32First(snapshot, &entry))
+		while (Process32Next(snapshot, &entry))
+			if (!_wcsicmp(entry.szExeFile, L"Control_Panel.exe"))
+				exists = true;
+
+	CloseHandle(snapshot);
+	return exists;
+}
+
 bool killMain() {
 	system("cd \"C:\\Windows\\System32\" && taskkill /IM \"ZoomScheduler_C++.exe\" /F");
 	return !IsMainRunning;
+}
+
+bool killCP() {
+	system("cd \"C:\\Windows\\System32\" && taskkill /IM \"Control_Panel.exe\" /F");
+	return !IsCPRunning;
 }
 
 void hideConsole() {
@@ -260,4 +292,29 @@ bool toggleDefMainVisOut() {
 
 void showConsole() {
 	::ShowWindow(::GetConsoleWindow(), SW_SHOW);
+}
+
+#include <filesystem>
+#include <shlobj.h>
+
+std::vector<std::string> getFiles() {
+	char path[MAX_PATH];
+	SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path);
+
+	std::string dirPath(path);
+	dirPath += "\\ZoomScheduler - DO NOT TAMPER";
+
+	std::vector<std::string> files;
+
+	for (const auto& file : std::filesystem::directory_iterator(dirPath)) {
+		std::filesystem::path filePath = file.path();
+		files.push_back(filePath.string());
+	}
+
+	return files;
+}
+
+inline bool endsIn(std::string const& value, std::string const& ending) {
+	if (ending.size() > value.size()) return false;
+	return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
 }

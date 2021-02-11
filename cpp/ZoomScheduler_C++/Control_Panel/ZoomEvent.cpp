@@ -66,16 +66,16 @@ void ZoomEvent::serialize() {
 	}
 }
 
-ZoomEvent ZoomEvent::fetch(std::string nameOfFile) {
+ZoomEvent ZoomEvent::fetch(std::string filePath) {
 
-	char path[MAX_PATH];
+	/*char path[MAX_PATH];
 	SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path);
 
 	std::string dirPath(path);
 	dirPath += "\\ZoomScheduler - DO NOT TAMPER";
 	std::string filePath{ dirPath + "\\" + nameOfFile + ".ze" };
 
-	std::cout << "Fetching data for " << nameOfFile << " . . .\n";
+	std::cout << "Fetching data for " << nameOfFile << " . . .\n";*/
 	std::fstream inFile;
 	inFile.open(filePath.c_str(), std::ios::in);
 

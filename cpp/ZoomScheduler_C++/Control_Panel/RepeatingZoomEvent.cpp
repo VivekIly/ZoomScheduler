@@ -72,16 +72,16 @@ void RepeatingZoomEvent::serialize() {
 	}
 }
 
-RepeatingZoomEvent RepeatingZoomEvent::fetch(std::string nameOfFile) {
+RepeatingZoomEvent RepeatingZoomEvent::fetch(std::string filePath) {
 
-	char path[MAX_PATH];
+	/*char path[MAX_PATH];
 	SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path);
 
 	std::string dirPath(path);
 	dirPath += "\\ZoomScheduler - DO NOT TAMPER";
 	std::string filePath{ dirPath + "\\" + nameOfFile + ".rze" };
 
-	std::cout << "Fetching data . . .\n";
+	std::cout << "Fetching data . . .\n";*/
 	std::fstream inFile;
 	inFile.open(filePath.c_str(), std::ios::in);
 
@@ -103,7 +103,7 @@ RepeatingZoomEvent RepeatingZoomEvent::fetch(std::string nameOfFile) {
 		std::cout << "Incompatible type codes.";
 	}
 
-	RepeatingZoomEvent temp(temp_name, temp_url, temp_days, temp_time);
+	RepeatingZoomEvent temp(temp_name, temp_url, temp_time, temp_days);
 
 	return temp;
 }

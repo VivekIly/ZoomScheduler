@@ -7,12 +7,16 @@
 #include "Commands.h"
 
 void help() {
-	std::cout << "List of commands: \n\n";
+	std::cout << "\nList of commands: \n\n";
 	std::cout << "\'-restart\':\tRestarts the application to refresh data.\n";
-	std::cout << "\'-exit\':\tExits the application after safely storing data.\n";
 	std::cout << "\'-create\':\tOpens the create event wizard which guides the user through creating a new event.\n";
 	std::cout << "\'-toggle\':\tToggles the temporary visibility of the event viewer window.\n";
-	std::cout << "\'-toggle def\':\tToggles the default visibility of the event viewer window.\n\n";
+	std::cout << "\'-toggle def\':\tToggles the default visibility of the event viewer window.\n";
+	std::cout << "\'-check\':\tChecks if the main application is running.\n";
+	std::cout << "\'-show\':\tShows all the scheduled events.\n";
+	std::cout << "\'-exit\':\tExits the application after safely storing data without keeping the contorl panel open.\n";
+	std::cout << "\'-kill main\':\tCloses the main application while keeping the control panel open.\n";
+	std::cout << '\n';
 }
 
 void restart() {
@@ -137,4 +141,89 @@ void toggleDefMainVisibility() {
 		std::cout << "Event viewer window temporary visibility set to true.\n\n";
 	else
 		std::cout << "Event viewer window temporary visibility set to false.\n\n";
+}
+
+void check() {
+	if (IsMainRunning()) {
+		std::cout << "Main application is running.\n\n";
+	}
+	else {
+		std::cout << "Main application is not running.\n\n";
+	}
+}
+
+inline bool endsIn(std::string const& value, std::string const& ending) {
+	if (ending.size() > value.size()) return false;
+	return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+}
+
+void show() {
+	std::vector<std::string> files = getFiles();
+
+	ZoomEvent fetchZE;
+	RepeatingZoomEvent fetchRZE;
+
+	std::vector<std::string> ZEfiles{};
+	std::vector<std::string> RZEfiles{};
+
+	for (std::string s : files) {
+		if (endsIn(s, ".ze")) {
+			ZEfiles.push_back(s);
+		}
+		else if (endsIn(s, ".rze")) {
+			RZEfiles.push_back(s);
+		}
+	}
+
+	if (ZEfiles.size() == 0 && RZEfiles.size() == 0) {
+		std::cout << "There are no scheduled events.\n";
+	}
+	else {
+		int numOfFiles = ZEfiles.size() + RZEfiles.size();
+
+		std::cout << "\nFound a total of " << numOfFiles << " scheduled events (" << ZEfiles.size() << " one-time and " << RZEfiles.size() << " repeating).\n";
+
+		for (std::string s : ZEfiles) {
+			ZoomEvent temp = fetchZE.fetch(s);
+			std::cout << '\n' << temp.getName() << std::endl;
+			std::cout << temp.getDate() << '\t';
+			std::cout << temp.getTime() << std::endl;
+			std::cout << temp.getURL() << "\n";
+		}
+		for (std::string s : RZEfiles) {
+			RepeatingZoomEvent temp = fetchRZE.fetch(s);
+			std::cout << '\n' << temp.getName() << std::endl;
+
+			std::string daysOut{ "" };
+			std::string tempDays = temp.getDays();
+
+			if (tempDays[0] == '1') {
+				daysOut += "Mon ";
+			}
+			if (tempDays[1] == '1') {
+				daysOut += "Tues ";
+			}
+			if (tempDays[2] == '1') {
+				daysOut += "Wed ";
+			}
+			if (tempDays[3] == '1') {
+				daysOut += "Thurs ";
+			}
+			if (tempDays[4] == '1') {
+				daysOut += "Fri ";
+			}
+			if (tempDays[5] == '1') {
+				daysOut += "Sat ";
+			}
+			if (tempDays[6] == '1') {
+				daysOut += "Sun ";
+			}
+
+			std::cout << daysOut;
+			std::cout << '\t' << temp.getTime() << std::endl;
+			std::cout << temp.getURL() << "\n";
+		}
+	}
+
+	std::cout << '\n';
 }

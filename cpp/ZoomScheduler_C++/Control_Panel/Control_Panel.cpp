@@ -23,3 +23,7 @@ int main() {
 
 	return 0;
 }
+
+// TODO: test if event already exists when creating
+// TODO: remove event command
+// TODO: time elapsed for initializing

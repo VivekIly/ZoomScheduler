@@ -20,10 +20,12 @@ void getCommand(bool displayInd);
 inline bool fileExists(const std::string& name);
 bool IsMainRunning();
 bool killMain();
+bool killCP();
 void hideConsole();
 bool toggleMainVisOut();
 bool toggleDefMainVisOut();
 void showConsole();
-char* getCurrentTime();
+std::vector<std::string> getFiles();
+inline bool endsIn(std::string const& value, std::string const& ending);
 
 #endif
