@@ -5,6 +5,7 @@
 char* getCurrentTime();
 std::string getCurrentTimeComp();
 std::string getCurrentDateComp();
+int getToday();
 void hideConsole();
 void showConsole();
 std::vector<std::string> getFiles();

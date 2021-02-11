@@ -15,7 +15,7 @@ public:
 	RepeatingZoomEvent(std::string name, std::string url, std::string time, std::string days);
 
 	void openLink();
-	bool serialize();
+	void serialize();
 	RepeatingZoomEvent fetch(std::string nameOfFile);
 
 	std::string getName() { return m_name; }

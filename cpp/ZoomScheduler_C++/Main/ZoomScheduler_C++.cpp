@@ -20,6 +20,12 @@ int main() {
 
 	std::vector<std::string> files = getFiles();
 
+	int today{getToday()};
+	int daysIndex{ today - 1 };
+
+	/*std::cout << "Today: " << today << std::endl;
+	std::cout << "Day Index: " << daysIndex << std::endl;*/
+
 	for (int i = 0; i < 1; i--) {
 		if (!isVisible())
 			hideConsole();
@@ -30,13 +36,23 @@ int main() {
 	    std::cout.flush();
 
 		files = getFiles();
+		getToday();
 
 		for (std::string s : files) {
 			if (endsIn(s, ".ze")) {
 				ZoomEvent temp = fetchZE.fetch(s);
 				if (getCurrentDateComp() == temp.getDate() && getCurrentTimeComp() == temp.getTime()) {
 					temp.openLink();
+					std::cout << "Zoom event \'" << temp.getName() << "\' opened.\n";
 					remove(s.c_str());
+				}
+			}
+			else if (endsIn(s, ".rze")) {
+				RepeatingZoomEvent temp = fetchRZE.fetch(s);
+				if (temp.getDays().at(daysIndex) == '1' && getCurrentTimeComp() == temp.getTime()) {
+					temp.openLink();
+					std::cout << "Repeating zoom event \'" << temp.getName() << "\' opened.\n";
+					std::this_thread::sleep_for(std::chrono::milliseconds(61000));
 				}
 			}
 		}
@@ -48,3 +64,5 @@ int main() {
 }
 
 // TODO: Open in default browser
+// TODO: Command to remove events
+// TODO: Exit create event wizard

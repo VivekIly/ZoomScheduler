@@ -19,6 +19,7 @@ void runCommand(std::string& command);
 void getCommand(bool displayInd);
 inline bool fileExists(const std::string& name);
 bool IsMainRunning();
+bool killMain();
 void hideConsole();
 bool toggleMainVisOut();
 bool toggleDefMainVisOut();

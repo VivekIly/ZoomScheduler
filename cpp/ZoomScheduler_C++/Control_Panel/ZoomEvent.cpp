@@ -38,6 +38,12 @@ void ZoomEvent::serialize() {
 	std::string dirPath(path);
 	dirPath += "\\ZoomScheduler - DO NOT TAMPER";
 
+	std::cout << "Attempting to create directory . . .\n";
+	if (_mkdir(dirPath.c_str()) == 0)
+		std::cout << "Successfully created directory.\n";
+	else
+		std::cout << "Unable to create directory. It may already exist.\n";
+
 	std::cout << "Generating filepath . . .\n";
 	std::string filePath{ dirPath + "\\" + m_name + getCurrentDateTimeName() + ".ze" };
 

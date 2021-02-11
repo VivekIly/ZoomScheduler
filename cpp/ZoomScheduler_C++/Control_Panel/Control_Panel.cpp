@@ -16,7 +16,7 @@ int main() {
 	startMainZS();
 
 	//Print welcome message.
-	std::cout << "Welcome to the ZoomScheduler control panel! Enter any commands here to control the program. \nType '-help' to display list of commands.\n";
+	std::cout << "Welcome to the ZoomScheduler control panel! Enter any commands here to control the program. \nType '-help' to display list of commands.\n\n";
 
 	//Starts loop of command inputs. 
 	getCommand(true);

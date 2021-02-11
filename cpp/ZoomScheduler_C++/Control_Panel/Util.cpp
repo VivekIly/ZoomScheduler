@@ -8,7 +8,7 @@
 
 #include "Util.h"
 
-std::string commands[] = { "-help", "-exit", "-restart", "-create", "-toggle", "-toggle def" };
+std::string commands[] = { "-help", "-exit zs", "-restart", "-create", "-toggle", "-toggle def" };
 
 char* getCurrentDateTime() {
 	time_t rawtime;
@@ -62,7 +62,7 @@ void initialize() {
 		std::cout << "Unable to create directory. It may already exist.\n";
 
 	if (!IsMainRunning()) {
-		
+
 		std::string filePathDefault{ dirPath + "\\eventViewerDefaultVisibility.txt" };
 		std::string filePathTemp{ dirPath + "\\eventViewerVisible.txt" };
 
@@ -169,7 +169,9 @@ void getCommand(bool displayInd) {
 
 
 	std::cout << "Attempting to exit application . . . \n";
-	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+	killMain();
+	std::cout << "Closing control panel in 5 seconds . . .\n";
+	std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 }
 
 inline bool fileExists(const std::string& name) {
@@ -191,6 +193,11 @@ bool IsMainRunning() {
 
 	CloseHandle(snapshot);
 	return exists;
+}
+
+bool killMain() {
+	system("cd \"C:\\Windows\\System32\" && taskkill /IM \"ZoomScheduler_C++.exe\" /F");
+	return !IsMainRunning;
 }
 
 void hideConsole() {

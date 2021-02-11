@@ -51,6 +51,20 @@ std::string getCurrentDateComp() {
 	return date;
 }
 
+int getToday() {
+	const char DAY[] = { '7','1','2','3','4','5','6' };
+	time_t rawtime;
+	tm* timeinfo;
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	int wday = timeinfo->tm_wday;
+	//std::cout << "Today is: " << DAY[wday] << "\n";
+
+	int dayInt = DAY[wday] - '0';
+
+	return dayInt;
+}
+
 //--------------------------------------------------------------------- hideConsole
 void hideConsole() {
 	::ShowWindow(::GetConsoleWindow(), SW_HIDE);

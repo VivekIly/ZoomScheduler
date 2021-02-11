@@ -91,7 +91,7 @@ RepeatingZoomEvent RepeatingZoomEvent::fetch(std::string filePath) {
 		std::cout << "Incompatible type codes.";
 	}
 
-	RepeatingZoomEvent temp(temp_name, temp_url, temp_days, temp_time);
+	RepeatingZoomEvent temp(temp_name, temp_url, temp_time, temp_days);
 
 	return temp;
 }

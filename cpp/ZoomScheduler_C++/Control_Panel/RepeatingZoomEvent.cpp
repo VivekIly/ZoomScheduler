@@ -36,7 +36,7 @@ void RepeatingZoomEvent::openLink() {
 	system(preout.c_str());
 }
 
-bool RepeatingZoomEvent::serialize() {
+void RepeatingZoomEvent::serialize() {
 
 	char path[MAX_PATH];
 	SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path);
