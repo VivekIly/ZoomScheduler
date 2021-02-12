@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ControlPanel", "..\ControlP
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Restart", "..\Restart\Restart.vcxproj", "{560BEF6D-8731-4540-99F9-B75762295DD4}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ZoomSchedulerInstaller", "..\ZoomSchedulerInstaller\ZoomSchedulerInstaller.vdproj", "{869AACF0-531E-418F-998F-C43EF03B3BEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,10 @@ Global
 		{560BEF6D-8731-4540-99F9-B75762295DD4}.Release|x64.Build.0 = Release|x64
 		{560BEF6D-8731-4540-99F9-B75762295DD4}.Release|x86.ActiveCfg = Release|Win32
 		{560BEF6D-8731-4540-99F9-B75762295DD4}.Release|x86.Build.0 = Release|Win32
+		{869AACF0-531E-418F-998F-C43EF03B3BEB}.Debug|x64.ActiveCfg = Debug
+		{869AACF0-531E-418F-998F-C43EF03B3BEB}.Debug|x86.ActiveCfg = Debug
+		{869AACF0-531E-418F-998F-C43EF03B3BEB}.Release|x64.ActiveCfg = Release
+		{869AACF0-531E-418F-998F-C43EF03B3BEB}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

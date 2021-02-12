@@ -2,7 +2,7 @@
 #include <iostream>
 
 void killCP() {
-    system("cd \"C:\\Windows\\System32\" && taskkill /IM \"Control_Panel.exe\" /F");
+    system("cd \"C:\\Windows\\System32\" && taskkill /IM \"ControlPanel.exe\" /F");
 }
 
 void killMain() {
@@ -10,7 +10,7 @@ void killMain() {
 }
 
 void startCP() {
-    system("start C:\\Users\\Vivek\\OneDrive\\Documents\\GitHub\\ZoomScheduler\\cpp\\ZoomScheduler_C++\\Control_Panel\\Release\\Control_Panel.exe");
+    system("start C:\\Users\\Vivek\\OneDrive\\Documents\\GitHub\\ZoomScheduler\\cpp\\ZoomScheduler_C++\\Main\\Release\\ControlPanel.exe");
 }
 
 void startMain() {

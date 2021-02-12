@@ -20,7 +20,7 @@ void help() {
 }
 
 void restart() {
-	system("start C:\\Users\\Vivek\\OneDrive\\Documents\\GitHub\\ZoomScheduler\\cpp\\ZoomScheduler_C++\\RestartZScpp\\Release\\RestartZScpp.exe");
+	system("start C:\\Users\\Vivek\\OneDrive\\Documents\\GitHub\\ZoomScheduler\\cpp\\ZoomScheduler_C++\\Main\\Release\\Restart.exe");
 }
 
 void create() {
